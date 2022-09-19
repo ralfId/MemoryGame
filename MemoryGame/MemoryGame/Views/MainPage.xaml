@@ -9,11 +9,11 @@
 
     <ContentPage.Content>
         <ScrollView Padding="40">
-            <Grid RowDefinitions="*,auto,auto,auto,auto,*">
+            <Grid RowDefinitions="*,auto,auto,auto,auto,*" RowSpacing="25">
 
                 <Label  Grid.Row="1" Text="Chooise a Level" HorizontalOptions="Center" FontSize="Title" FontAttributes="Bold"/>
 
-                <Frame Grid.Row="2">
+                <Frame Grid.Row="2" HasShadow="False" BorderColor="Black" >
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                         <Label Text="EASY"/>
                     </StackLayout>
@@ -22,7 +22,7 @@
                     </Frame.GestureRecognizers>
                 </Frame>
 
-                <Frame Grid.Row="3">
+                <Frame Grid.Row="3" HasShadow="False" BorderColor="Black" > 
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                         <Label Text="MEDIUM"/>
                     </StackLayout>
@@ -31,7 +31,7 @@
                     </Frame.GestureRecognizers>
                 </Frame>
 
-                <Frame Grid.Row="4">
+                <Frame Grid.Row="4" HasShadow="False" BorderColor="Black" >
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                         <Label Text="HARD" />
                     </StackLayout>

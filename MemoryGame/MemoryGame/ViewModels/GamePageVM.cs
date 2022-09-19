@@ -22,85 +22,82 @@ namespace MemoryGame.ViewModels
 
         private int MaxNum;
         private int MaxNumOfCards;
+        private int Level;
 
+        public List<Pokemon> selectedPokemonLst;
 
-        public GamePageVM(INavigation navigation) : base(navigation)
+        public GamePageVM(INavigation navigation, int level) : base(navigation)
         {
             _navigation = navigation;
-
+            Level = level;
             _pokeApi = DependencyService.Get<IPokemonApiService>();
-
+            selectedPokemonLst = new List<Pokemon>();
             Init();
         }
 
-        private ObservableCollection<Pokemon> _obPokemon ;
+
+        public Command<Pokemon> SetSelectedPokemonCommand { get; set; }
+
+        private ObservableCollection<Pokemon> _obPokemon = new ObservableCollection<Pokemon>() ;
 
         public ObservableCollection<Pokemon> ObPokemon 
         {
             get => _obPokemon;
-            set { _obPokemon = value; OnPropertyChanged(nameof(ObPokemon)); }
+            set { _obPokemon = value; OnPropertyChanged(); }
         }
 
-
-        private string _url;
-
-        public string Url
+        private int _spanGrid;
+        public int SpanGrid
         {
-            get => _url;
-            set { _url = value; OnPropertyChanged(nameof(Url)); }
+            get => _spanGrid;
+            set { _spanGrid = value; OnPropertyChanged(); }
         }
 
-        private string _image;
 
-        public string Image
-        {
-            get => _image;
-            set { _image = value; OnPropertyChanged(nameof(Image)); }
-        }
-
-        private string _name;
-
-        public string Name
-        {
-            get => _name;
-            set { _name = value; OnPropertyChanged(nameof(Name)); }
-        }
-
-        //private Pokemon _pokemon;
-
-        //public Pokemon pokemon
+        //private IList<Pokemon> _selectedItemsLst;
+        //public IList<Pokemon> SelectedItemsLst
         //{
-        //    get => _pokemon;
-        //    set { _pokemon = value; OnPropertyChanged(nameof(pokemon)); }
+        //    get => _selectedItemsLst;
+        //    set { _selectedItemsLst = value; OnPropertyChanged(); }
         //}
 
         public async void Init()
         {
-
+            SetLocals();
             await LoadPokemons();
+            SetSelectedPokemonCommand = new Command<Pokemon>(SetSelectedPokemon);
         }
+
+        
 
         private async Task LoadPokemons()
         {
 
             try
             {
-                SetLocals();
-
+                
                 ListPokemon = new List<Pokemon>();
 
+                //get list of images
+                //MaxNum obtendra un rango de pokemons dependiendo el nivel
                 var pokeList = await _pokeApi.GetPokemonList<PokemonList>(MaxNum);
 
                 //add pokelist to local list
                 ListPokemon.AddRange(pokeList.Pokemons);
+
                 //shuffle complet list
                 ListPokemon.Shuffle();
+
                 //select max num of cards depens on level
                 var cardlimit = ListPokemon.GetRange(0, MaxNumOfCards);
+
                 //duplicate cardlimit
                 var duplicatedLst = cardlimit.ToList();
 
                 cardlimit.AddRange(duplicatedLst);
+
+                //shuffle list for UI
+                cardlimit.Shuffle();
 
                 ObPokemon = new ObservableCollection<Pokemon>(cardlimit.ToList());
             }
@@ -113,9 +110,34 @@ namespace MemoryGame.ViewModels
 
         private void SetLocals()
         {
-            MaxNum = (SelectedLevel == 1) ? 100 : (SelectedLevel == 2) ? 200 : (SelectedLevel == 3) ? 300 : 100;
+            SpanGrid = (Level == 1 | Level == 2) ? 4 : 5;
 
-            MaxNumOfCards = (SelectedLevel == 1) ? 8 : (SelectedLevel == 2) ? 12 : (SelectedLevel == 3) ? 15 : 8;
+            MaxNum = (Level == 1) ? 100 : (Level == 2) ? 200 : (Level == 3) ? 300 : 100;
+
+            MaxNumOfCards = (Level == 1) ? 8 : (Level == 2) ? 12 : (Level == 3) ? 15 : 8;
+        }
+
+        private void SetSelectedPokemon(Pokemon obj)
+        {
+
+            if (selectedPokemonLst.Count >= 2) return;
+
+            selectedPokemonLst.Add(obj);
+
+            if (selectedPokemonLst.Count == 2)
+                CheckPairs();
+
+        }
+
+        private void CheckPairs()
+        {
+            if (selectedPokemonLst[0].Name == selectedPokemonLst[1].Name)
+            {
+                ObPokemon.Where(x => x.Name == selectedPokemonLst[0].Name).Select(x => x.IsEnabled = false);
+                ObPokemon.Where(x => x.Name == selectedPokemonLst[1].Name).Select(x => x.IsEnabled = false);
+
+                selectedPokemonLst.Clear();
+            }
         }
     }
 }

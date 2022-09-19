@@ -13,10 +13,10 @@ namespace MemoryGame.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GamePage : ContentPage
     {
-        public GamePage()
+        public GamePage(int level)
         {
             InitializeComponent();
-            BindingContext = new GamePageVM(Navigation);
+            BindingContext = new GamePageVM(Navigation, level);
         }
     }
 }

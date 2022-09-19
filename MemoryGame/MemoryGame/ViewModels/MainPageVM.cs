@@ -31,8 +31,7 @@ namespace MemoryGame.ViewModels
                     await Application.Current.MainPage.DisplayAlert("Alert", "Select a game level", "OK");
                 }
 
-                SelectedLevel = selection;
-                await _navigation.PushAsync(new GamePage()); ;
+                await _navigation.PushAsync(new GamePage(selection), true); ;
             }
         }
     }

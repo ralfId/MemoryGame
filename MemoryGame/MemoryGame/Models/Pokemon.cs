@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace MemoryGame.Models
 {
@@ -14,6 +15,17 @@ namespace MemoryGame.Models
         public string Url { get; set; }
         [JsonIgnore]
         public string Image => urlImage();
+
+        [JsonIgnore]
+        public bool IsEnabled { get; set; } = true;
+
+        [JsonIgnore]
+        public bool IsFlyped { get; set; } = false;
+
+
+        [JsonIgnore]
+        public ICommand CardCommand { get; set; }
+
         public string urlImage()
         {
             string pokeUrl = Url;
@@ -22,5 +34,7 @@ namespace MemoryGame.Models
 
             return $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon{pokeUrl}.png";
         }
+
+
     }
 }
