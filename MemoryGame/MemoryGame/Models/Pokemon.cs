@@ -8,33 +8,30 @@ namespace MemoryGame.Models
 {
     public class Pokemon
     {
+        
+
         [JsonProperty("name")]
         public string Name { get; set; }
+
         [JsonProperty("url")]
-
         public string Url { get; set; }
-        [JsonIgnore]
-        public string Image => urlImage();
 
-        [JsonIgnore]
-        public bool IsEnabled { get; set; } = true;
 
+        
         [JsonIgnore]
-        public bool IsFlyped { get; set; } = false;
-
+        public int PokeId { get; set; }
 
         [JsonIgnore]
-        public ICommand CardCommand { get; set; }
+        public string Image { get; set; }
 
-        public string urlImage()
-        {
-            string pokeUrl = Url;
-            pokeUrl = pokeUrl.Substring(0, pokeUrl.Length - 1);
-            pokeUrl = pokeUrl.Substring(pokeUrl.LastIndexOf("/"));
+        [JsonIgnore]
+        public bool IsEnabledItem { get; set; } = true;
 
-            return $"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon{pokeUrl}.png";
-        }
+        [JsonIgnore]
+        public bool FlipItem { get; set; }
 
+        //[JsonIgnore]
+        //public bool IsFlipped { get; set; }
 
     }
 }

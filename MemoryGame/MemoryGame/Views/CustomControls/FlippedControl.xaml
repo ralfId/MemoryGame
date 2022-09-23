@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MemoryGame.Views.CustomControls.FlippedControl"
+    x:Name="ContentLayout" >
+    <Grid>
+
+        <ContentView x:Name="FrontLayout">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FlipToBackExecute"/>
+            </ContentView.GestureRecognizers>
+        </ContentView>
+
+        <ContentView x:Name="BackLayout">
+            <ContentView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FlipToFrontExecute"/>
+            </ContentView.GestureRecognizers>
+        </ContentView>
+
+    </Grid>
+
+</ContentView>
+

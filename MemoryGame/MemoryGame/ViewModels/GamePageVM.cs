@@ -17,35 +17,37 @@ namespace MemoryGame.ViewModels
         private readonly IPokemonApiService _pokeApi;
         private readonly INavigation _navigation;
 
-        //public ObservableCollection<Pokemon> ObPokemon { get; set; }
-        public List<Pokemon> ListPokemon;
 
         private int MaxNum;
         private int MaxNumOfCards;
         private int Level;
-
-        public List<Pokemon> selectedPokemonLst;
+        public List<Pokemon> selectedPokemonLst; //to store selected items
+        List<Pokemon> CardLstPokemon = new List<Pokemon>(); //to store items from api
 
         public GamePageVM(INavigation navigation, int level) : base(navigation)
         {
             _navigation = navigation;
-            Level = level;
             _pokeApi = DependencyService.Get<IPokemonApiService>();
+
+            Level = level;
+
             selectedPokemonLst = new List<Pokemon>();
+
             Init();
         }
 
 
         public Command<Pokemon> SetSelectedPokemonCommand { get; set; }
 
-        private ObservableCollection<Pokemon> _obPokemon = new ObservableCollection<Pokemon>() ;
+        private ObservableCollection<Pokemon> _obPokemon;
 
-        public ObservableCollection<Pokemon> ObPokemon 
+        public ObservableCollection<Pokemon> ObPokemon
         {
             get => _obPokemon;
             set { _obPokemon = value; OnPropertyChanged(); }
         }
 
+        //determinate how many columns for grid
         private int _spanGrid;
         public int SpanGrid
         {
@@ -53,13 +55,17 @@ namespace MemoryGame.ViewModels
             set { _spanGrid = value; OnPropertyChanged(); }
         }
 
+        //block the collectionview
+        private bool _isBlocked = false;
+        public bool IsBlocked
+        {
+            get => _isBlocked;
+            set { _isBlocked = value; OnPropertyChanged(); }
+        }
 
-        //private IList<Pokemon> _selectedItemsLst;
-        //public IList<Pokemon> SelectedItemsLst
-        //{
-        //    get => _selectedItemsLst;
-        //    set { _selectedItemsLst = value; OnPropertyChanged(); }
-        //}
+
+    
+
 
         public async void Init()
         {
@@ -68,38 +74,59 @@ namespace MemoryGame.ViewModels
             SetSelectedPokemonCommand = new Command<Pokemon>(SetSelectedPokemon);
         }
 
-        
+
 
         private async Task LoadPokemons()
         {
 
             try
             {
-                
-                ListPokemon = new List<Pokemon>();
 
-                //get list of images
-                //MaxNum obtendra un rango de pokemons dependiendo el nivel
                 var pokeList = await _pokeApi.GetPokemonList<PokemonList>(MaxNum);
+                pokeList.Pokemons.Shuffle();
 
-                //add pokelist to local list
-                ListPokemon.AddRange(pokeList.Pokemons);
+                var cardlimit = pokeList.Pokemons.GetRange(0, MaxNumOfCards).Select(x => new Pokemon
+                {
+                    PokeId = x.PokeId,
+                    Name = x.Name,
+                    Url = x.Url,
+                    Image = Utils.Helpers.urlImage(x.Url),
+                    IsEnabledItem = x.IsEnabledItem,
+                    FlipItem = x.FlipItem
 
-                //shuffle complet list
-                ListPokemon.Shuffle();
+                }).ToList();
 
-                //select max num of cards depens on level
-                var cardlimit = ListPokemon.GetRange(0, MaxNumOfCards);
+                var cardlimit2 = cardlimit.ConvertAll(x => new Pokemon
+                {
+                    PokeId = x.PokeId,
+                    Name = x.Name,
+                    Url = x.Url,
+                    Image = Utils.Helpers.urlImage(x.Url),
+                    IsEnabledItem = x.IsEnabledItem,
+                    FlipItem = x.FlipItem
 
-                //duplicate cardlimit
-                var duplicatedLst = cardlimit.ToList();
+                }).ToList();
 
-                cardlimit.AddRange(duplicatedLst);
 
-                //shuffle list for UI
-                cardlimit.Shuffle();
+                CardLstPokemon = CardLstPokemon.Concat(cardlimit).Concat(cardlimit2).ToList();
 
-                ObPokemon = new ObservableCollection<Pokemon>(cardlimit.ToList());
+                CardLstPokemon.Shuffle();
+                int id = 1;
+                CardLstPokemon.ForEach(x => x.PokeId = id++);
+
+                //TODO: Delete this line, is just to test 
+                CardLstPokemon.ForEach(x => Console.WriteLine($"{x.PokeId}-->{x.Name}"));
+
+                ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
+
+                await Task.Delay(3000);
+
+                CardLstPokemon.ForEach(x => x.FlipItem = !x.FlipItem);
+                ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
+                
+               
+
+
             }
             catch (Exception ex)
             {
@@ -119,25 +146,70 @@ namespace MemoryGame.ViewModels
 
         private void SetSelectedPokemon(Pokemon obj)
         {
+            if (IsBlocked) return;
 
-            if (selectedPokemonLst.Count >= 2) return;
+            if (selectedPokemonLst.Any())
+            {
+                if (selectedPokemonLst.Contains(obj))
+                {
+                    selectedPokemonLst.Remove(obj);
+                    return;
+                }
+            }
 
             selectedPokemonLst.Add(obj);
 
             if (selectedPokemonLst.Count == 2)
+            {
+                IsBlocked = true;
                 CheckPairs();
+                IsBlocked = false;
+            }
+
 
         }
 
-        private void CheckPairs()
+        private async void CheckPairs()
         {
+
             if (selectedPokemonLst[0].Name == selectedPokemonLst[1].Name)
             {
-                ObPokemon.Where(x => x.Name == selectedPokemonLst[0].Name).Select(x => x.IsEnabled = false);
-                ObPokemon.Where(x => x.Name == selectedPokemonLst[1].Name).Select(x => x.IsEnabled = false);
+
+                var poke1 = selectedPokemonLst[0];
+                poke1.IsEnabledItem = false;
+
+
+
+                var poke2 = selectedPokemonLst[1];
+                poke2.IsEnabledItem = false;
+
+
+                ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[0])] = poke1;
+                ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[1])] = poke2;
 
                 selectedPokemonLst.Clear();
+
             }
+            else
+            {
+                var poke1 = selectedPokemonLst[0];
+                poke1.FlipItem = true;
+
+
+
+                var poke2 = selectedPokemonLst[1];
+                poke2.FlipItem = true;
+
+                await Task.Delay(1000);
+
+                ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[0])] = poke1;
+                ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[1])] = poke2; 
+
+                selectedPokemonLst.Clear();
+
+            }
+
+
         }
     }
 }

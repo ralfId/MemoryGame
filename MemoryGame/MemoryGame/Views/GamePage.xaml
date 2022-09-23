@@ -1,42 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:MemoryGame.ViewModels"
              xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:models="clr-namespace:MemoryGame.Models"
+             xmlns:vm="clr-namespace:MemoryGame.ViewModels"
+             x:DataType="vm:GamePageVM"
              xmlns:control="clr-namespace:MemoryGame.Views.CustomControls"
              x:Class="MemoryGame.Views.GamePage"
-             x:DataType="vm:GamePageVM"
-             x:Name="gamePage">
+             x:Name="gamePage"
+             NavigationPage.HasNavigationBar="False">
+
+
     <ContentPage.Content>
         <Grid RowDefinitions="90, *">
 
             <CollectionView Grid.Row="1" ItemsSource="{Binding ObPokemon}" VerticalOptions="Center" Margin="20,0,20,10" >
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="{Binding SpanGrid}" HorizontalItemSpacing="10" VerticalItemSpacing="10"/>
+                    <GridItemsLayout Orientation="Vertical" Span="{Binding SpanGrid}" HorizontalItemSpacing="10" VerticalItemSpacing="15"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Pokemon">
+                        <control:FlippedControl Command="{Binding BindingContext.SetSelectedPokemonCommand, Source={x:Reference gamePage}}" IsEnabledControl="{Binding IsEnabledItem}" FlipControl="{Binding FlipItem}">
+                            <control:FlippedControl.FrontContent>
 
-
-                        <control:FlipView Command="{Binding BindingContext.SetSelectedPokemonCommand, Source={x:Reference gamePage}}">
-                            <control:FlipView.FrontContent>
-                                <Label Text=" back content"/>
-                            </control:FlipView.FrontContent>
-
-                            <control:FlipView.BackContent>
-
-                                <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" IsEnabled="{Binding IsEnabled}">
-                                    <StackLayout Spacing="0">
-                                        <ffImage:CachedImage Source="{Binding Image}" Aspect="AspectFill" HeightRequest="100" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
-                                        <Label Text="{Binding Name}" Grid.Row="1" HorizontalTextAlignment="Center" FontSize="14" Margin="5" FontAttributes="Bold" LineBreakMode="TailTruncation" TranslationY="-5"/>
-                                    </StackLayout>
+                                <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False" >
+                                    <ffImage:CachedImage Source="pokemon.png" Aspect="AspectFill" HeightRequest="100" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
                                 </Frame>
-                            </control:FlipView.BackContent>
-                        </control:FlipView>
+                            </control:FlippedControl.FrontContent>
+
+                            <control:FlippedControl.BackContent>
+                                <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False">
+                                    <ffImage:CachedImage Source="{Binding Image}" Aspect="AspectFill" HeightRequest="100" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                                </Frame>
+                            </control:FlippedControl.BackContent>
+                        </control:FlippedControl>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -18,18 +18,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\GamePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\MainPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Xamarin.FFImageLoading.Forms" />
     <None Remove="Views\CustomControls\" />
+    <None Remove="Utils\Fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CustomControls\" />
+    <Folder Include="Utils\Fonts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Images\pokemon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
