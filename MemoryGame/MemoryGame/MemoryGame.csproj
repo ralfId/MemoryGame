@@ -20,15 +20,21 @@
   <ItemGroup>
     <None Remove="Xamarin.FFImageLoading.Forms" />
     <None Remove="Views\CustomControls\" />
-    <None Remove="Utils\Fonts\" />
+    <None Remove="Resources\" />
+    <None Remove="Resources\Fonts\" />
+    <None Remove="Resources\Fonts\boxicons.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CustomControls\" />
-    <Folder Include="Utils\Fonts\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Fonts\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Images\pokemon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\boxicons.ttf" />
   </ItemGroup>
 </Project>

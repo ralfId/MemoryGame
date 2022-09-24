@@ -8,12 +8,16 @@
              xmlns:control="clr-namespace:MemoryGame.Views.CustomControls"
              x:Class="MemoryGame.Views.GamePage"
              x:Name="gamePage"
+             xmlns:Icon="clr-namespace:MemoryGame.Helpers"
              NavigationPage.HasNavigationBar="False">
 
 
     <ContentPage.Content>
         <Grid RowDefinitions="90, *">
+            <Frame>
+                <Label Text="{x:Static Icon:BoxIcon.BxAlarmExclamation}" FontFamily="BI" FontSize="30" />
 
+            </Frame>
             <CollectionView Grid.Row="1" ItemsSource="{Binding ObPokemon}" VerticalOptions="Center" Margin="20,0,20,10" >
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="{Binding SpanGrid}" HorizontalItemSpacing="10" VerticalItemSpacing="15"/>
