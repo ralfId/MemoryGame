@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Xamarin.Forms;
 
 namespace MemoryGame.ViewModels
@@ -20,9 +21,12 @@ namespace MemoryGame.ViewModels
 
         private int MaxNum;
         private int MaxNumOfCards;
-        private int Level;
+        
+
         public List<Pokemon> selectedPokemonLst; //to store selected items
         List<Pokemon> CardLstPokemon = new List<Pokemon>(); //to store items from api
+        Stopwatch stopWatch = new Stopwatch();
+        private Timer timer = new Timer();
 
         public GamePageVM(INavigation navigation, int level) : base(navigation)
         {
@@ -30,14 +34,25 @@ namespace MemoryGame.ViewModels
             _pokeApi = DependencyService.Get<IPokemonApiService>();
 
             Level = level;
+            //PokeImageHeightRequest = (Level == 1) ? 120.00 : (Level == 2) ? 75.00 : 100.00;
 
-            selectedPokemonLst = new List<Pokemon>();
+            GoBackCommand = new Command(GoBackCommandExecute);
 
             Init();
         }
 
 
         public Command<Pokemon> SetSelectedPokemonCommand { get; set; }
+        public Command GoBackCommand { get; set; }
+
+        #region Bindable Properties
+
+        private int _level;
+        public int Level
+        {
+            get => _level;
+            set { _level = value; OnPropertyChanged(); }
+        }
 
         private ObservableCollection<Pokemon> _obPokemon;
 
@@ -64,23 +79,73 @@ namespace MemoryGame.ViewModels
         }
 
 
-    
+        private int _counterMoves;
+        public int CounterMoves
+        {
+            get => _counterMoves;
+            set { _counterMoves = value; OnPropertyChanged(); }
+        }
+
+        private string _gameTimer;
+        public string GameTimer
+        {
+            get => _gameTimer;
+            set { _gameTimer = value; OnPropertyChanged(); }
+        }
+
+        private int _counterCouples;
+        public int CounterCouples
+        {
+            get => _counterCouples;
+            set { _counterCouples = value; OnPropertyChanged(); }
+        }
+
+        private int _couples;
+        public int Couples
+        {
+            get => _couples;
+            set { _couples = value; OnPropertyChanged(); }
+        }
+
+        private bool _loading = true;
+        public bool Loading
+        {
+            get => _loading;
+            set { _loading = value; OnPropertyChanged(); }
+        }
+
+        private int _counterTimer;
+        public int CounterTimer
+        {
+            get => _counterTimer;
+            set { _counterTimer = value; OnPropertyChanged(); }
+        }
+
+        private double _pokeImageHeightRequest;
+        public double PokeImageHeightRequest
+        {
+            get => _pokeImageHeightRequest;
+            set { _pokeImageHeightRequest = value; OnPropertyChanged(); }
+        }
+        #endregion
 
 
         public async void Init()
         {
+            selectedPokemonLst = new List<Pokemon>();
+
             SetLocals();
             await LoadPokemons();
+
             SetSelectedPokemonCommand = new Command<Pokemon>(SetSelectedPokemon);
         }
-
-
 
         private async Task LoadPokemons()
         {
 
             try
             {
+                IsBlocked = true;
 
                 var pokeList = await _pokeApi.GetPokemonList<PokemonList>(MaxNum);
                 pokeList.Pokemons.Shuffle();
@@ -118,13 +183,12 @@ namespace MemoryGame.ViewModels
                 CardLstPokemon.ForEach(x => Console.WriteLine($"{x.PokeId}-->{x.Name}"));
 
                 ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
-
                 await Task.Delay(3000);
 
                 CardLstPokemon.ForEach(x => x.FlipItem = !x.FlipItem);
                 ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
-                
-               
+
+                SetTimerToStartGame();
 
 
             }
@@ -135,13 +199,78 @@ namespace MemoryGame.ViewModels
             }
         }
 
+        private void SetTimerToStartGame()
+        {
+            try
+            {
+                stopWatch.Start();
+                Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+                {
+                    // do something every 1 second
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        // interact with UI elements
+                        CounterTimer++;
+                    });
+
+                    if (CounterTimer == 3)
+                    {
+                        stopWatch.Stop();
+                        CounterMoves = 0;
+                        StartTheGame(true);
+                        Loading = false;
+                        return false;
+                    }
+                    return true; // runs again, or false to stop
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
+
+        private void StartTheGame(bool StartStopGame)
+        {
+            try
+            {
+                stopWatch.Start();
+                IsBlocked = false;
+                Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+                {
+                    // do something every 60 seconds
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        // interact with UI elements
+                        GameTimer = stopWatch.Elapsed.ToString(@"hh\:mm\:ss");
+                    });
+
+                    if (StartStopGame)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        stopWatch.Stop();
+                        return false; // runs again, or false to stop
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
+
         private void SetLocals()
         {
-            SpanGrid = (Level == 1 | Level == 2) ? 4 : 5;
+            SpanGrid = (Level == 1 || Level == 2) ? 4 : 6;
 
             MaxNum = (Level == 1) ? 100 : (Level == 2) ? 200 : (Level == 3) ? 300 : 100;
 
             MaxNumOfCards = (Level == 1) ? 8 : (Level == 2) ? 12 : (Level == 3) ? 15 : 8;
+            Couples = (Level == 1) ? 8 : (Level == 2) ? 12 : (Level == 3) ? 15 : 8;
+
         }
 
         private void SetSelectedPokemon(Pokemon obj)
@@ -188,6 +317,13 @@ namespace MemoryGame.ViewModels
                 ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[1])] = poke2;
 
                 selectedPokemonLst.Clear();
+                CounterCouples++;
+                CounterMoves++;
+
+                if (CounterCouples == Couples)
+                {
+                    StartTheGame(false);
+                }
 
             }
             else
@@ -203,13 +339,26 @@ namespace MemoryGame.ViewModels
                 await Task.Delay(1000);
 
                 ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[0])] = poke1;
-                ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[1])] = poke2; 
+                ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[1])] = poke2;
 
                 selectedPokemonLst.Clear();
-
+                CounterMoves++;
+                if (CounterCouples == Couples)
+                {
+                    StartTheGame(false);
+                }
             }
 
 
         }
+
+        private async void GoBackCommandExecute()
+        {
+            //TODO: Clean all properties in memory
+            stopWatch.Stop();
+            await _navigation.PopToRootAsync();
+        }
+
+
     }
 }

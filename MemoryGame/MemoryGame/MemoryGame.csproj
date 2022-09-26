@@ -22,7 +22,7 @@
     <None Remove="Views\CustomControls\" />
     <None Remove="Resources\" />
     <None Remove="Resources\Fonts\" />
-    <None Remove="Resources\Fonts\boxicons.ttf" />
+    <!--<None Remove="Resources\Fonts\boxicons.ttf" />-->
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CustomControls\" />

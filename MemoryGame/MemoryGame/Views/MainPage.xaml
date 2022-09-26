@@ -2,9 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MemoryGame.ViewModels"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              x:Class="MemoryGame.Views.MainPage"
              x:DataType="vm:MainPageVM"
-             NavigationPage.HasNavigationBar="False">
+             ios:Page.UseSafeArea="True"
+             Style="{StaticResource NavPageStyle}">
 
 
 
@@ -12,29 +14,29 @@
         <ScrollView Padding="40">
             <Grid RowDefinitions="*,auto,auto,auto,auto,*" RowSpacing="25">
 
-                <Label  Grid.Row="1" Text="Chooise a Level" HorizontalOptions="Center" FontSize="Title" FontAttributes="Bold"/>
+                <Label  Grid.Row="1" Text="Chooise a Level" Style="{StaticResource HomeLabel}"/>
 
-                <Frame Grid.Row="2" HasShadow="False" BorderColor="Black" >
+                <Frame Grid.Row="2" Style="{StaticResource SelectLevelFrame}">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <Label Text="EASY"/>
+                        <Label Text="EASY" Style="{StaticResource SelectLevelLabel}"/>
                     </StackLayout>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="1"/>
                     </Frame.GestureRecognizers>
                 </Frame>
 
-                <Frame Grid.Row="3" HasShadow="False" BorderColor="Black" > 
+                <Frame Grid.Row="3" Style="{StaticResource SelectLevelFrame}" > 
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <Label Text="MEDIUM"/>
+                        <Label Text="MEDIUM" Style="{StaticResource SelectLevelLabel}"/>
                     </StackLayout>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="2"/>
                     </Frame.GestureRecognizers>
                 </Frame>
 
-                <Frame Grid.Row="4" HasShadow="False" BorderColor="Black" >
+                <Frame Grid.Row="4" Style="{StaticResource SelectLevelFrame}" >
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <Label Text="HARD" />
+                        <Label Text="HARD"  Style="{StaticResource SelectLevelLabel}"/>
                     </StackLayout>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="3"/>

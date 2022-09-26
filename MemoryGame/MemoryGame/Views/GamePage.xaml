@@ -2,39 +2,153 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:models="clr-namespace:MemoryGame.Models"
              xmlns:vm="clr-namespace:MemoryGame.ViewModels"
              x:DataType="vm:GamePageVM"
              xmlns:control="clr-namespace:MemoryGame.Views.CustomControls"
              x:Class="MemoryGame.Views.GamePage"
+             ios:Page.UseSafeArea="True"
              x:Name="gamePage"
              xmlns:Icon="clr-namespace:MemoryGame.Helpers"
-             NavigationPage.HasNavigationBar="False">
+             Style="{StaticResource NavPageStyle}" >
 
 
     <ContentPage.Content>
-        <Grid RowDefinitions="90, *">
-            <Frame>
-                <Label Text="{x:Static Icon:BoxIcon.BxAlarmExclamation}" FontFamily="BI" FontSize="30" />
+        <Grid RowDefinitions="70,*" Margin="0,10,0,0">
+
+            <Frame Grid.Row="0" HeightRequest="70"  CornerRadius="25" Margin="10" Padding="0" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" HasShadow="False">
+                <Frame.Triggers>
+                    <DataTrigger TargetType="Frame" Binding="{Binding Loading}" Value="True">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Frame" Binding="{Binding Loading}" Value="False">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Frame.Triggers>
+                <Grid ColumnDefinitions="50,1,*">
+                    <Image>
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                        </Image.GestureRecognizers>
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Static Icon:BoxIcon.BxChevronLeft}" FontFamily="BI" Size="Small" Color="{x:StaticResource White}"/>
+                        </Image.Source>
+
+                    </Image>
+                    <BoxView Grid.Column="1" BackgroundColor="{x:StaticResource White}"/>
+
+                    <Label Grid.Column="2" Text="{Binding CounterTimer}" FontSize="30" TextColor="{x:StaticResource White}" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+
+                </Grid>
+            </Frame>
+
+            <Frame Grid.Row="0"  CornerRadius="25" Margin="10" Padding="0" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" HasShadow="False" IsClippedToBounds="True">
+                <Frame.Triggers>
+                    <DataTrigger TargetType="Frame" Binding="{Binding Loading}" Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Frame" Binding="{Binding Loading}" Value="False">
+                        <Setter Property="IsVisible" Value="True"/>
+                    </DataTrigger>
+                </Frame.Triggers>
+                <Grid ColumnDefinitions="50,1,*">
+                    <Image>
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                        </Image.GestureRecognizers>
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Static Icon:BoxIcon.BxChevronLeft}" FontFamily="BI" Size="Small" Color="{x:StaticResource White}"/>
+                        </Image.Source>
+
+                    </Image>
+                    <BoxView Grid.Column="1" BackgroundColor="{x:StaticResource White}"/>
+                    <Grid Grid.Column="2" ColumnDefinitions="*,*,*"  ColumnSpacing="3" Padding="0,5">
+                        <StackLayout Grid.Column="0" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" Spacing="0">
+                            <Label Text="Moves" Style="{x:StaticResource GameHeaderLabel}"/>
+                            <Label Text="{Binding CounterMoves}" Style="{x:StaticResource GameHeaderLabel}"/>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="1" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" Spacing="0">
+                            <Label Text="Time" Style="{x:StaticResource GameHeaderLabel}"/>
+                            <Label Text="{Binding GameTimer}" Style="{x:StaticResource GameHeaderLabel}"/>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="2" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" Spacing="0">
+                            <Label Text="Couples" Style="{x:StaticResource GameHeaderLabel}"/>
+                            <Label FontAttributes="Bold" Style="{x:StaticResource GameHeaderLabel}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding CounterCouples}"/>
+                                        <Span Text="/"/>
+                                        <Span Text="{Binding Couples}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+
+                    </Grid>
+                </Grid>
 
             </Frame>
-            <CollectionView Grid.Row="1" ItemsSource="{Binding ObPokemon}" VerticalOptions="Center" Margin="20,0,20,10" >
+
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding ObPokemon}" VerticalOptions="CenterAndExpand" Margin="15,0,15,10" >
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="{Binding SpanGrid}" HorizontalItemSpacing="10" VerticalItemSpacing="15"/>
+                    <GridItemsLayout Orientation="Vertical" Span="{Binding SpanGrid}" HorizontalItemSpacing="3" VerticalItemSpacing="7"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Pokemon">
-                        <control:FlippedControl Command="{Binding BindingContext.SetSelectedPokemonCommand, Source={x:Reference gamePage}}" IsEnabledControl="{Binding IsEnabledItem}" FlipControl="{Binding FlipItem}">
+                        <control:FlippedControl Command="{Binding BindingContext.SetSelectedPokemonCommand, Source={x:Reference gamePage}}" IsEnabledControl="{Binding IsEnabledItem}" FlipControl="{Binding FlipItem}" Padding="3">
                             <control:FlippedControl.FrontContent>
 
                                 <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False" >
-                                    <ffImage:CachedImage Source="pokemon.png" Aspect="AspectFill" HeightRequest="100" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                                    <Frame.Triggers>
+                                        <DataTrigger TargetType="Frame" Binding="{Binding IsEnabledItem}" Value="False">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+
+                                    </Frame.Triggers>
+                                    <ffImage:CachedImage Source="pokemon.png" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                        <ffImage:CachedImage.Triggers>
+                                            <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="1">
+                                                <Setter Property="HeightRequest" Value="100"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="2">
+                                                <Setter Property="HeightRequest" Value="85"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="3">
+                                                <Setter Property="HeightRequest" Value="90"/>
+                                            </DataTrigger>
+                                        </ffImage:CachedImage.Triggers>
+
+                                    </ffImage:CachedImage>
                                 </Frame>
                             </control:FlippedControl.FrontContent>
 
                             <control:FlippedControl.BackContent>
                                 <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False">
-                                    <ffImage:CachedImage Source="{Binding Image}" Aspect="AspectFill" HeightRequest="100" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+                                    <Frame.Triggers>
+                                        <DataTrigger TargetType="Frame" Binding="{Binding IsEnabledItem}" Value="False">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+
+                                    </Frame.Triggers>
+                                    <ffImage:CachedImage Source="{Binding Image}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}">
+                                        <ffImage:CachedImage.Triggers>
+                                            <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="1">
+                                                <Setter Property="HeightRequest" Value="100"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="2">
+                                                <Setter Property="HeightRequest" Value="85"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="3">
+                                                <Setter Property="HeightRequest" Value="90"/>
+                                            </DataTrigger>
+                                        </ffImage:CachedImage.Triggers>
+
+                                    </ffImage:CachedImage>
                                 </Frame>
                             </control:FlippedControl.BackContent>
                         </control:FlippedControl>
