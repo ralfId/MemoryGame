@@ -70,8 +70,9 @@ namespace MemoryGame.Views.CustomControls
         }
 
         /// <summary>
-        /// This property can enable or disabled the containers: The Main Container Layout, Front Container Layout and Back Container Layout
-        /// when this property fire to FALSE all controls will be disabled and Front Layout and Back Layout visible properties will be as user default
+        /// This property can flip the control to back or front content
+        /// TRUE => will flip to front content
+        /// FALSE => will flip to back content
         /// </summary>
         public static readonly BindableProperty FlipControlProperty = BindableProperty.Create(nameof(FlipControl), typeof(bool), typeof(FlippedControl), defaultValue: false, propertyChanged: FlipControlPropertyChanged);
         public bool FlipControl
@@ -92,6 +93,13 @@ namespace MemoryGame.Views.CustomControls
             if (propertyName.Equals(BackContentProperty.PropertyName))
             {
                 BackLayout.Content = BackContent;
+            }
+
+            if (propertyName.Equals(IsEnabledControlProperty.PropertyName))
+            {
+                ContentLayout.IsEnabled = IsEnabledControl;
+                BackLayout.IsEnabled = IsEnabledControl;
+                FrontLayout.IsEnabled = IsEnabledControl;
             }
         }
 
@@ -140,8 +148,13 @@ namespace MemoryGame.Views.CustomControls
                 mainLayout.IsEnabled = false; //disabled Container Layout
                 mainLayout.FrontLayout.IsEnabled = false; //disabled Front Container Layout
                 mainLayout.BackLayout.IsEnabled = false; //disabled Back Container Layout
+            }
 
-
+            if ((bool)newValue)
+            {
+                mainLayout.IsEnabled = true; //disabled Container Layout
+                mainLayout.FrontLayout.IsEnabled = true; //disabled Front Container Layout
+                mainLayout.BackLayout.IsEnabled = true; //disabled Back Container Layout
             }
         }
 

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MemoryGame.ViewModels"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:Lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
              x:Class="MemoryGame.Views.MainPage"
              x:DataType="vm:MainPageVM"
              ios:Page.UseSafeArea="True"
@@ -11,37 +12,60 @@
 
 
     <ContentPage.Content>
-        <ScrollView Padding="40">
-            <Grid RowDefinitions="*,auto,auto,auto,auto,*" RowSpacing="25">
+        <ScrollView>
+            <Grid>
 
-                <Label  Grid.Row="1" Text="Chooise a Level" Style="{StaticResource HomeLabel}"/>
+                <Lottie:AnimationView x:Name="BackgroundAnime"
+                                      AutoPlay="True"
+                                      Animation="starry.json"
+                                      AnimationSource="AssetOrBundle"
+                                      VerticalOptions="FillAndExpand"
+                                      HorizontalOptions="FillAndExpand"
+                                      HeightRequest="500"
+                                      RepeatMode="Infinite"
+                                      />
 
-                <Frame Grid.Row="2" Style="{StaticResource SelectLevelFrame}">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <Label Text="EASY" Style="{StaticResource SelectLevelLabel}"/>
-                    </StackLayout>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="1"/>
-                    </Frame.GestureRecognizers>
-                </Frame>
+                <Grid  RowDefinitions="*,auto,auto,auto,auto,*" RowSpacing="25" Padding="40">
+                    <Lottie:AnimationView x:Name="brainAnime"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      AutoPlay="True"
+                                      Animation="brain-DT.json"
+                                      AnimationSource="AssetOrBundle"
+                                      VerticalOptions="End"
+                                      HorizontalOptions="FillAndExpand"
+                                      HeightRequest="150"
+                                      />
+                    <Label  Grid.Row="1" Text="Chooise a Level" Style="{StaticResource HomeLabel}"/>
 
-                <Frame Grid.Row="3" Style="{StaticResource SelectLevelFrame}" > 
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <Label Text="MEDIUM" Style="{StaticResource SelectLevelLabel}"/>
-                    </StackLayout>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="2"/>
-                    </Frame.GestureRecognizers>
-                </Frame>
+                    <Frame Grid.Row="2" Style="{StaticResource SelectLevelFrame}">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Label Text="EASY" Style="{StaticResource SelectLevelLabel}"/>
+                        </StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="1"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
 
-                <Frame Grid.Row="4" Style="{StaticResource SelectLevelFrame}" >
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                        <Label Text="HARD"  Style="{StaticResource SelectLevelLabel}"/>
-                    </StackLayout>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="3"/>
-                    </Frame.GestureRecognizers>
-                </Frame>
+                    <Frame Grid.Row="3" Style="{StaticResource SelectLevelFrame}" >
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Label Text="MEDIUM" Style="{StaticResource SelectLevelLabel}"/>
+                        </StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="2"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <Frame Grid.Row="4" Style="{StaticResource SelectLevelFrame}" >
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Label Text="HARD"  Style="{StaticResource SelectLevelLabel}"/>
+                        </StackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="3"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </Grid>
+
             </Grid>
         </ScrollView>
     </ContentPage.Content>

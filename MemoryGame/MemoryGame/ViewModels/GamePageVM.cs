@@ -27,6 +27,7 @@ namespace MemoryGame.ViewModels
         List<Pokemon> CardLstPokemon = new List<Pokemon>(); //to store items from api
         Stopwatch stopWatch = new Stopwatch();
         private Timer timer = new Timer();
+        public int Couples { get; set; }
 
         public GamePageVM(INavigation navigation, int level) : base(navigation)
         {
@@ -34,8 +35,7 @@ namespace MemoryGame.ViewModels
             _pokeApi = DependencyService.Get<IPokemonApiService>();
 
             Level = level;
-            //PokeImageHeightRequest = (Level == 1) ? 120.00 : (Level == 2) ? 75.00 : 100.00;
-
+            SetSelectedPokemonCommand = new Command<Pokemon>(SetSelectedPokemon);
             GoBackCommand = new Command(GoBackCommandExecute);
 
             Init();
@@ -71,7 +71,7 @@ namespace MemoryGame.ViewModels
         }
 
         //block the collectionview
-        private bool _isBlocked = false;
+        private bool _isBlocked = true;
         public bool IsBlocked
         {
             get => _isBlocked;
@@ -86,7 +86,7 @@ namespace MemoryGame.ViewModels
             set { _counterMoves = value; OnPropertyChanged(); }
         }
 
-        private string _gameTimer;
+        private string _gameTimer = "00:00:00";
         public string GameTimer
         {
             get => _gameTimer;
@@ -100,32 +100,26 @@ namespace MemoryGame.ViewModels
             set { _counterCouples = value; OnPropertyChanged(); }
         }
 
-        private int _couples;
-        public int Couples
+
+        private bool _isVisibleCountDown;
+        public bool IsVisibleCountDown
         {
-            get => _couples;
-            set { _couples = value; OnPropertyChanged(); }
+            get => _isVisibleCountDown;
+            set { _isVisibleCountDown = value; OnPropertyChanged(); }
         }
 
-        private bool _loading = true;
-        public bool Loading
+        private bool _isRunning = true;
+        public bool IsRunning
         {
-            get => _loading;
-            set { _loading = value; OnPropertyChanged(); }
+            get => _isRunning;
+            set { _isRunning = value; OnPropertyChanged(); }
         }
 
-        private int _counterTimer;
-        public int CounterTimer
+        private bool _playCountDown;
+        public bool PlayCountDown
         {
-            get => _counterTimer;
-            set { _counterTimer = value; OnPropertyChanged(); }
-        }
-
-        private double _pokeImageHeightRequest;
-        public double PokeImageHeightRequest
-        {
-            get => _pokeImageHeightRequest;
-            set { _pokeImageHeightRequest = value; OnPropertyChanged(); }
+            get => _playCountDown;
+            set { _playCountDown = value; OnPropertyChanged(); }
         }
         #endregion
 
@@ -136,8 +130,8 @@ namespace MemoryGame.ViewModels
 
             SetLocals();
             await LoadPokemons();
-
-            SetSelectedPokemonCommand = new Command<Pokemon>(SetSelectedPokemon);
+            await DelayCountDown();
+            StartTheGame(true);
         }
 
         private async Task LoadPokemons()
@@ -156,7 +150,7 @@ namespace MemoryGame.ViewModels
                     Name = x.Name,
                     Url = x.Url,
                     Image = Utils.Helpers.urlImage(x.Url),
-                    IsEnabledItem = x.IsEnabledItem,
+                    IsEnabledItem = false,
                     FlipItem = x.FlipItem
 
                 }).ToList();
@@ -167,7 +161,7 @@ namespace MemoryGame.ViewModels
                     Name = x.Name,
                     Url = x.Url,
                     Image = Utils.Helpers.urlImage(x.Url),
-                    IsEnabledItem = x.IsEnabledItem,
+                    IsEnabledItem = false,
                     FlipItem = x.FlipItem
 
                 }).ToList();
@@ -179,17 +173,7 @@ namespace MemoryGame.ViewModels
                 int id = 1;
                 CardLstPokemon.ForEach(x => x.PokeId = id++);
 
-                //TODO: Delete this line, is just to test 
-                CardLstPokemon.ForEach(x => Console.WriteLine($"{x.PokeId}-->{x.Name}"));
-
                 ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
-                await Task.Delay(3000);
-
-                CardLstPokemon.ForEach(x => x.FlipItem = !x.FlipItem);
-                ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
-
-                SetTimerToStartGame();
-
 
             }
             catch (Exception ex)
@@ -199,43 +183,36 @@ namespace MemoryGame.ViewModels
             }
         }
 
-        private void SetTimerToStartGame()
+        private async Task DelayCountDown()
+        {
+            //await Task.Delay(500);
+            IsVisibleCountDown = true;
+            await Task.Delay(500);
+            PlayCountDown = true;
+            await Task.Delay(2500);
+            IsRunning = false;
+            IsVisibleCountDown = false;
+            PlayCountDown = false;
+        }
+
+        private async void StartTheGame(bool StartStopGame)
         {
             try
             {
-                stopWatch.Start();
-                Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+
+                
+                if (StartStopGame)
                 {
-                    // do something every 1 second
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        // interact with UI elements
-                        CounterTimer++;
-                    });
+                    await Task.Delay(4000);
 
-                    if (CounterTimer == 3)
-                    {
-                        stopWatch.Stop();
-                        CounterMoves = 0;
-                        StartTheGame(true);
-                        Loading = false;
-                        return false;
-                    }
-                    return true; // runs again, or false to stop
-                });
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-            }
-        }
+                    CardLstPokemon.ForEach(x => { x.FlipItem = true; x.IsEnabledItem = true; });
+                    ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
 
-        private void StartTheGame(bool StartStopGame)
-        {
-            try
-            {
-                stopWatch.Start();
-                IsBlocked = false;
+                    stopWatch.Start();
+                    IsBlocked = false;
+                }
+               if(!StartStopGame)
+                    IsBlocked = true;
                 Device.StartTimer(new TimeSpan(0, 0, 1), () =>
                 {
                     // do something every 60 seconds
@@ -243,6 +220,7 @@ namespace MemoryGame.ViewModels
                     {
                         // interact with UI elements
                         GameTimer = stopWatch.Elapsed.ToString(@"hh\:mm\:ss");
+
                     });
 
                     if (StartStopGame)
@@ -328,18 +306,44 @@ namespace MemoryGame.ViewModels
             }
             else
             {
-                var poke1 = selectedPokemonLst[0];
-                poke1.FlipItem = true;
+                var poke1 = new Pokemon
+                {
+                    PokeId = selectedPokemonLst[0].PokeId,
+                    Name = selectedPokemonLst[0].Name,
+                    Url = selectedPokemonLst[0].Url,
+                    Image = selectedPokemonLst[0].Image,
+                    IsEnabledItem = true,
+                    FlipItem = true
+                };
+
+                var poke2 = new Pokemon
+                {
+                    PokeId = selectedPokemonLst[1].PokeId,
+                    Name = selectedPokemonLst[1].Name,
+                    Url = selectedPokemonLst[1].Url,
+                    Image = selectedPokemonLst[1].Image,
+                    IsEnabledItem = true,
+                    FlipItem = true
+                };
+
+                var newIndexPoke1 = ObPokemon.IndexOf(selectedPokemonLst[0]);
+                var newIndexPoke2 = ObPokemon.IndexOf(selectedPokemonLst[1]);
 
 
 
-                var poke2 = selectedPokemonLst[1];
-                poke2.FlipItem = true;
 
                 await Task.Delay(1000);
 
-                ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[0])] = poke1;
-                ObPokemon[ObPokemon.IndexOf(selectedPokemonLst[1])] = poke2;
+
+                ObPokemon.Remove(selectedPokemonLst[0]);
+                ObPokemon.Add(poke1);
+                var oldIndexPoke1 = ObPokemon.IndexOf(poke1);
+                ObPokemon.Move(oldIndexPoke1, newIndexPoke1);
+
+                ObPokemon.Remove(selectedPokemonLst[1]);
+                ObPokemon.Add(poke2);
+                var oldIndexPoke2 = ObPokemon.IndexOf(poke2);
+                ObPokemon.Move(oldIndexPoke2, newIndexPoke2);
 
                 selectedPokemonLst.Clear();
                 CounterMoves++;

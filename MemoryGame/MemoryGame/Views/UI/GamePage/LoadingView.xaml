@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    x:Class="MemoryGame.Views.UI.GamePage.LoadingView">
+    <ContentView.Content>
+        <Grid IsVisible="{Binding IsRunning}">
+
+            <ActivityIndicator  Color="{x:AppThemeBinding Light={x:StaticResource BlackLT}, Dark={x:StaticResource BlackDT}}"
+                                    IsRunning="{Binding IsRunning}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <Lottie:AnimationView
+                        Animation="three-two-one.json"
+                        AnimationSource="AssetOrBundle"
+                        HeightRequest="50"
+                        IsVisible="{Binding IsVisibleCountDown}"
+                        AutoPlay="True"/>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>
+

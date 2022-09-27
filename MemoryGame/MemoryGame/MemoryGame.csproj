@@ -15,6 +15,7 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,11 +24,16 @@
     <None Remove="Resources\" />
     <None Remove="Resources\Fonts\" />
     <!--<None Remove="Resources\Fonts\boxicons.ttf" />-->
+    <None Remove="Com.Airbnb.Xamarin.Forms.Lottie" />
+    <None Remove="Views\UI\" />
+    <None Remove="Views\UI\GamePage\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CustomControls\" />
     <Folder Include="Resources\" />
     <Folder Include="Resources\Fonts\" />
+    <Folder Include="Views\UI\" />
+    <Folder Include="Views\UI\GamePage\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Images\pokemon.png">
