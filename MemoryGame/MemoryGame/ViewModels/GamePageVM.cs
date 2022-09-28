@@ -253,7 +253,7 @@ namespace MemoryGame.ViewModels
 
         }
 
-        private void SetSelectedPokemon(Pokemon obj)
+        private async void SetSelectedPokemon(Pokemon obj)
         {
             if (IsBlocked) return;
 
@@ -272,6 +272,7 @@ namespace MemoryGame.ViewModels
             {
                 IsBlocked = true;
                 CheckPairs();
+                await Task.Delay(500);
                 IsBlocked = false;
             }
 
@@ -335,7 +336,7 @@ namespace MemoryGame.ViewModels
 
 
 
-                await Task.Delay(1000);
+                await Task.Delay(500);
 
 
                 ObPokemon.Remove(selectedPokemonLst[0]);
