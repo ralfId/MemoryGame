@@ -1,6 +1,8 @@
 ﻿using MemoryGame.ApiService;
 using MemoryGame.Helpers;
 using MemoryGame.Models;
+using MemoryGame.Views.Popups;
+using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace MemoryGame.ViewModels
@@ -42,8 +45,8 @@ namespace MemoryGame.ViewModels
         }
 
 
-        public Command<Pokemon> SetSelectedPokemonCommand { get; set; }
-        public Command GoBackCommand { get; set; }
+        public ICommand SetSelectedPokemonCommand { get; set; }
+        public ICommand GoBackCommand { get; set; }
 
         #region Bindable Properties
 
@@ -185,7 +188,6 @@ namespace MemoryGame.ViewModels
 
         private async Task DelayCountDown()
         {
-            //await Task.Delay(500);
             IsVisibleCountDown = true;
             await Task.Delay(500);
             PlayCountDown = true;
@@ -301,6 +303,7 @@ namespace MemoryGame.ViewModels
                 if (CounterCouples == Couples)
                 {
                     StartTheGame(false);
+                    SaveScores();
                 }
 
             }
@@ -347,19 +350,26 @@ namespace MemoryGame.ViewModels
 
                 selectedPokemonLst.Clear();
                 CounterMoves++;
-                if (CounterCouples == Couples)
-                {
-                    StartTheGame(false);
-                }
             }
 
 
         }
 
+        private async void SaveScores()
+        {
+            var myScores = new Models.GameScores()
+            {
+                GameTime = TimeSpan.Parse(GameTimer),
+                Moves = CounterMoves.ToString()
+            };
+
+            await _navigation.PushPopupAsync(new GameScoresPopup(myScores));
+        }
+
         private async void GoBackCommandExecute()
         {
-            //TODO: Clean all properties in memory
             stopWatch.Stop();
+            stopWatch.Reset();
             await _navigation.PopToRootAsync();
         }
 

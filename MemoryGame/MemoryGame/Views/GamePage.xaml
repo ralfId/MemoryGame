@@ -7,12 +7,12 @@
              xmlns:vm="clr-namespace:MemoryGame.ViewModels"
              x:DataType="vm:GamePageVM"
              xmlns:control="clr-namespace:MemoryGame.Views.CustomControls"
-             xmlns:Lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             
              xmlns:ui="clr-namespace:MemoryGame.Views.UI.GamePage"
              x:Class="MemoryGame.Views.GamePage"
              ios:Page.UseSafeArea="True"
              x:Name="gamePage"
-             xmlns:Icon="clr-namespace:MemoryGame.Helpers"
+             
              Style="{StaticResource NavPageStyle}" >
 
 

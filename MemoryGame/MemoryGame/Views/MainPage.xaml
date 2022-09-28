@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:MemoryGame.ViewModels"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:Lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             xmlns:Icon="clr-namespace:MemoryGame.Helpers"
              x:Class="MemoryGame.Views.MainPage"
              x:DataType="vm:MainPageVM"
              ios:Page.UseSafeArea="True"
@@ -22,7 +23,6 @@
                                       VerticalOptions="FillAndExpand"
                                       HorizontalOptions="FillAndExpand"
                                       HeightRequest="500"
-                                      RepeatMode="Infinite"
                                       />
 
                 <Grid  RowDefinitions="*,auto,auto,auto,auto,*" RowSpacing="25" Padding="40">

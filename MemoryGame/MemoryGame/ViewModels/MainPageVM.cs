@@ -1,19 +1,16 @@
-﻿using MemoryGame.ApiService;
-using MemoryGame.Utils;
-using MemoryGame.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using MemoryGame.Views;
+using MemoryGame.Views.Popups;
+using Rg.Plugins.Popup.Extensions;
+using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace MemoryGame.ViewModels 
+namespace MemoryGame.ViewModels
 {
     public class MainPageVM : BaseVM
     {
         private readonly INavigation _navigation;
 
-        public Command<string> NavToGamePageCommand { get; }
+        public ICommand NavToGamePageCommand { get; }
 
         public MainPageVM(INavigation navigation):base(navigation)
         {
@@ -33,6 +30,8 @@ namespace MemoryGame.ViewModels
 
                 await _navigation.PushAsync(new GamePage(selection), true); ;
             }
+            
+
         }
     }
 }

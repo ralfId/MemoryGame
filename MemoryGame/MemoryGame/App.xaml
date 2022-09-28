@@ -16,6 +16,12 @@
         <Color x:Key="BlackLT">#2C3F50</Color>
         <Color x:Key="BlackDT">#24495E</Color>
 
+        <Color x:Key="PopupTrasnparencyDT">#80ffffff</Color>
+        <Color x:Key="PopupTrasnparencyLT">#80000000</Color>
+
+        
+
+
         <Style x:Key="NavPageStyle" TargetType="NavigationPage" >
             <Setter Property="NavigationPage.HasNavigationBar" Value="False"/>
             <Setter Property="BackgroundColor" Value="{x:AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"/>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MemoryGame.Views.Popups.GameScoresPopup"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:vm="clr-namespace:MemoryGame.ViewModels.PopupsVM"
+    xmlns:Icon="clr-namespace:MemoryGame.Helpers"
+    x:DataType="vm:GameScoresPopupVM"
+    BackgroundColor="{x:AppThemeBinding Dark={StaticResource PopupTrasnparencyDT}, Light={StaticResource PopupTrasnparencyLT}}"
+    CloseWhenBackgroundIsClicked="False"
+    Padding="10" WidthRequest="300" HeightRequest="300">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <Frame CornerRadius="15" HeightRequest="300" WidthRequest="300" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="{x:AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}" >
+        <Grid RowDefinitions="*,auto,auto,auto,*" >
+            <Frame Grid.Row="1" HasShadow="False" Padding="5,10" CornerRadius="15" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" >
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="15">
+                    <Label Text="{x:Static Icon:BoxIcon.BxsTimer}" FontFamily="BI" FontSize="35" TextColor="#FFC300" VerticalOptions="Center" />
+                    <Grid  RowDefinitions="auto,auto" RowSpacing="5">
+                        <Label  Text="YOUR TIME" FontSize="18" FontAttributes="Bold" TextColor="{x:StaticResource White}" HorizontalOptions="Center"/>
+                        <Label Grid.Row="1" Text="{Binding GameScores.GameTime}" FontSize="18" FontAttributes="Bold" TextColor="{x:StaticResource White}" HorizontalOptions="Center"/>
+                    </Grid>
+
+                </StackLayout>
+
+            </Frame>
+            <Frame Grid.Row="2" HasShadow="False" Padding="5,10" CornerRadius="15" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="15">
+                    <Label Text="{x:Static Icon:BoxIcon.BxCopy}" FontFamily="BI" FontSize="35" TextColor="#FFC300" VerticalOptions="Center"/>
+                    <Grid RowDefinitions="auto,auto" RowSpacing="5">
+                        <Label  Text="MOVES" FontSize="18" FontAttributes="Bold" TextColor="{x:StaticResource White}" HorizontalOptions="Center"/>
+                        <Label Grid.Row="1" Text="{Binding GameScores.Moves}" FontSize="18" FontAttributes="Bold" TextColor="{x:StaticResource White}" HorizontalOptions="Center"/>
+                    </Grid>
+
+                </StackLayout>
+
+            </Frame>
+            <Button Grid.Row="3" Text="Close" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" Command="{Binding ClosePopupCommand}" CornerRadius="15" TextColor="{x:StaticResource White}"/>
+        </Grid>
+
+    </Frame>
+</pages:PopupPage>
+
