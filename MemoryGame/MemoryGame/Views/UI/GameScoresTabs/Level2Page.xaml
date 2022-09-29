@@ -5,12 +5,13 @@
     x:Class="MemoryGame.Views.UI.GameScoresTabs.Level2Page"
     xmlns:vm="clr-namespace:MemoryGame.ViewModels"
     xmlns:ui="clr-namespace:MemoryGame.Views.UI.GameScoresTabs"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    ios:Page.UseSafeArea="True"
     xmlns:models="clr-namespace:MemoryGame.Models"
     x:DataType="vm:GameScoresPageVM"
-    Padding="20,10"
     Style="{x:StaticResource NavPageStyle}" >
     <ContentPage.Content>
-        <Grid>
+        <Grid  Padding="20,10">
             <CollectionView ItemsSource="{Binding Ob_Level_2}" >
                 <CollectionView.EmptyView>
                     <ui:ItemEmptyView/>

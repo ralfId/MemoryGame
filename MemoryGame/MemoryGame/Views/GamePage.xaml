@@ -23,7 +23,6 @@
 
                 <ui:GameBoard Grid.Row="0"  />
 
-
                 <ui:LoadingView Grid.Row="1" />
 
                 <CollectionView Grid.Row="1" ItemsSource="{Binding ObPokemon}" VerticalOptions="End" Margin="15,0,15,10" >
@@ -41,7 +40,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Pokemon">
 
-                            <control:FlippedControl Command="{Binding BindingContext.SetSelectedPokemonCommand, Source={x:Reference gamePage}}" IsEnabledControl="{Binding IsEnabledItem}" FlipControl="{Binding FlipItem}" Padding="3">
+                            <control:FlippedControl Command="{Binding BindingContext.SetSelectedPokemonCommand, Source={x:Reference gamePage}}" FlipControl="{Binding FlipItem}" IsEnabledControl="{Binding IsEnabledItem}"  Padding="3">
                                 <control:FlippedControl.FrontContent>
 
                                     <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False" >
@@ -87,7 +86,7 @@
                 </CollectionView>
 
             </Grid>
-            <Grid>
+            <Grid Margin="0,75,0,0">
                 <Grid.Triggers>
                     <DataTrigger TargetType="Grid" Binding="{Binding IsBlocked}" Value="True">
                         <Setter Property="IsVisible" Value="True"/>

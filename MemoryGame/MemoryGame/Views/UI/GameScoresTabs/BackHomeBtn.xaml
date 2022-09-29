@@ -3,16 +3,26 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="MemoryGame.Views.UI.GameScoresTabs.BackHomeBtn"
+    BackgroundColor="Transparent"
     VerticalOptions="End" HorizontalOptions="End">
     <ContentView.Content>
         <ImageButton Source="homereturn.png"
                      WidthRequest="60" HeightRequest="60"
-                     CornerRadius="200"
                      VerticalOptions="End" HorizontalOptions="End" Padding="15"
                      Command="{Binding BackToHomeCommand}"
                      BackgroundColor="{x:AppThemeBinding Dark={x:StaticResource BlackDT}, Light={x:StaticResource BlackLT}}"
                      BorderColor="{x:AppThemeBinding Dark={x:StaticResource White}, Light={x:StaticResource White}}"
-                     BorderWidth="1"/>
+                     BorderWidth="1">
+            <ImageButton.CornerRadius>
+                <OnPlatform x:TypeArguments="x:Int32">
+                    <On Platform="iOS" Value="30"/>
+                    <On Platform="Android" Value="200"/>
+                </OnPlatform>
+
+            </ImageButton.CornerRadius>
+
+        </ImageButton>
+
     </ContentView.Content>
 </ContentView>
 
