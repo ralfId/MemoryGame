@@ -8,9 +8,6 @@
              x:DataType="vm:MainPageVM"
              ios:Page.UseSafeArea="True"
              Style="{StaticResource NavPageStyle}">
-
-
-
     <ContentPage.Content>
         <ScrollView>
             <Grid>
@@ -35,6 +32,7 @@
                                       HorizontalOptions="FillAndExpand"
                                       HeightRequest="150"
                                       />
+
                     <Label  Grid.Row="1" Text="Chooise a Level" Style="{StaticResource HomeLabel}"/>
 
                     <Frame Grid.Row="2" Style="{StaticResource SelectLevelFrame}">

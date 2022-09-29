@@ -45,14 +45,6 @@
                                 <control:FlippedControl.FrontContent>
 
                                     <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False" >
-                                        <Frame.Triggers>
-                                            <DataTrigger TargetType="Frame" Binding="{Binding IsEnabledItem}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Frame" Binding="{Binding IsEnabledItem}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                        </Frame.Triggers>
                                         <ffImage:CachedImage Source="pokemon.png" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                             <ffImage:CachedImage.Triggers>
                                                 <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="1">
@@ -72,14 +64,6 @@
 
                                 <control:FlippedControl.BackContent>
                                     <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False">
-                                        <Frame.Triggers>
-                                            <DataTrigger TargetType="Frame" Binding="{Binding IsEnabledItem}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Frame" Binding="{Binding IsEnabledItem}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                        </Frame.Triggers>
                                         <ffImage:CachedImage Source="{Binding Image}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}">
                                             <ffImage:CachedImage.Triggers>
                                                 <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="1">

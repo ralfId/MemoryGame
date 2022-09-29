@@ -8,16 +8,12 @@ namespace MemoryGame.Models
 {
     public class Pokemon
     {
-        
-
         [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonProperty("url")]
         public string Url { get; set; }
 
-
-        
         [JsonIgnore]
         public int PokeId { get; set; }
 
@@ -29,9 +25,6 @@ namespace MemoryGame.Models
 
         [JsonIgnore]
         public bool FlipItem { get; set; }
-
-        //[JsonIgnore]
-        //public bool IsFlipped { get; set; }
 
     }
 }
