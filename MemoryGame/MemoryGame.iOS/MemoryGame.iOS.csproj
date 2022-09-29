@@ -144,6 +144,9 @@
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.8.116</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -162,5 +165,7 @@
     </BundleResource>
     <BundleResource Include="Resources\starry.json" />
     <BundleResource Include="Resources\walking-ball.json" />
+    <BundleResource Include="Resources\homereturn.png" />
+    <BundleResource Include="Resources\mascotsnow.svg" />
   </ItemGroup>
 </Project>

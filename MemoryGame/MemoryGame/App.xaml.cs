@@ -12,7 +12,6 @@ namespace MemoryGame
             InitializeComponent();
 
             MainPage = new NavigationPage(new MainPage());
-            //MainPage = new GameScoresPage();
         }
 
         protected override void OnStart()

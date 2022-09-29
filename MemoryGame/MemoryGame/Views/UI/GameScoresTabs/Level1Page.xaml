@@ -9,14 +9,19 @@
     x:DataType="vm:GameScoresPageVM"
     Style="{x:StaticResource NavPageStyle}" Padding="20,10">
     <ContentPage.Content>
-        
-        <CollectionView ItemsSource="{Binding Ob_Level_1}" >
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:GameScores">
-                    <ui:ItemScore/>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <Grid RowDefinitions="*">
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Ob_Level_1}" >
+                <CollectionView.EmptyView>
+                    <ui:ItemEmptyView/>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:GameScores">
+                        <ui:ItemScore/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <ui:BackHomeBtn />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
 

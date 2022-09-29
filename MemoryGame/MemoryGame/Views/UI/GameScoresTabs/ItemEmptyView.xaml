@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    x:Class="MemoryGame.Views.UI.GameScoresTabs.ItemEmptyView">
+    <ContentView.Content>
+        <Grid>
+            <StackLayout BackgroundColor="{x:AppThemeBinding Dark={x:StaticResource Black}, Light={x:StaticResource White}}" VerticalOptions="Center">
+                <ffimageloadingsvg:SvgCachedImage Source="mascotsnow.svg"
+                               WidthRequest="200" HeightRequest="200"/>
+                <Label Text="No records for this level!"
+                               TextColor="{x:AppThemeBinding Dark={x:StaticResource White}, Light={x:StaticResource Black}}"
+                               FontAttributes="Bold" FontSize="Title"
+                               HorizontalOptions="Center"/>
+            </StackLayout>
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>
+
