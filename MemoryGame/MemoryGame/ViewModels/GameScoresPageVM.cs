@@ -44,13 +44,13 @@ namespace MemoryGame.ViewModels
             var listL3 = await _dBService.GetGameScoresByLevel("3");
 
             if (listL1 != null)
-                Ob_Level_1 = new ObservableCollection<GameScores>(listL1);
+                Ob_Level_1 = new ObservableCollection<GameScores>(listL1.OrderByDescending(x => x.Id));
 
             if (listL2 != null)
-                Ob_Level_2 = new ObservableCollection<GameScores>(listL2);
+                Ob_Level_2 = new ObservableCollection<GameScores>(listL2.OrderByDescending(x => x.Id));
 
             if (listL3 != null)
-                Ob_Level_3 = new ObservableCollection<GameScores>(listL3);
+                Ob_Level_3 = new ObservableCollection<GameScores>(listL3.OrderByDescending(x => x.Id));
         }
     }
 }
