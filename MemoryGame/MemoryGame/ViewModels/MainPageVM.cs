@@ -1,6 +1,7 @@
 ﻿using MemoryGame.Views;
 using MemoryGame.Views.Popups;
 using Rg.Plugins.Popup.Extensions;
+using System;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -11,12 +12,19 @@ namespace MemoryGame.ViewModels
         private readonly INavigation _navigation;
 
         public ICommand NavToGamePageCommand { get; }
+        public ICommand NavToScoresPagesCommand { get; }
 
         public MainPageVM(INavigation navigation):base(navigation)
         {
             _navigation = navigation;
 
             NavToGamePageCommand = new Command<string>(NavToGamePage);
+            NavToScoresPagesCommand = new Command(NavToScoresPages);
+        }
+
+        private async void NavToScoresPages()
+        {
+            await _navigation.PushAsync(new GameScoresPage());
         }
 
         private async void NavToGamePage(string i)

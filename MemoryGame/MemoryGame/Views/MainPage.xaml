@@ -25,7 +25,7 @@
                                       HeightRequest="500"
                                       />
 
-                <Grid  RowDefinitions="*,auto,auto,auto,auto,*" RowSpacing="25" Padding="40">
+                <Grid  RowDefinitions="*,auto,auto,auto,auto,auto,*" RowSpacing="25" Padding="40">
                     <Lottie:AnimationView x:Name="brainAnime"
                                       Grid.Row="0"
                                       Grid.RowSpan="2"
@@ -64,6 +64,12 @@
                             <TapGestureRecognizer Command="{Binding NavToGamePageCommand}" CommandParameter="3"/>
                         </Frame.GestureRecognizers>
                     </Frame>
+
+                    <Label Grid.Row="5" Text="View my scores" TextDecorations="Underline" FontAttributes="Bold" HorizontalTextAlignment="Center" FontSize="18">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavToScoresPagesCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </Grid>
 
             </Grid>
