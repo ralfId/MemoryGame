@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:localPages="clr-namespace:MemoryGame.Views.UI.GameScoresTabs"
+             x:Class="MemoryGame.Views.GameScoresPage"
+             BarBackgroundColor="{x:AppThemeBinding Dark={x:StaticResource BlackDT}, Light={x:StaticResource BlackLT}}"
+             Style="{x:StaticResource NavPageStyle}"
+             BarTextColor="{x:StaticResource White}">
+    <!--Pages can be added as references or inline-->
+    <localPages:Level1Page Title="Level 1" />
+    <localPages:Level2Page Title="Level 2" />
+    <localPages:Level3Page Title="Level 3" />
+</TabbedPage>

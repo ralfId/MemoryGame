@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MemoryGame.Views.UI.GameScoresTabs.Level2Page"
+    xmlns:vm="clr-namespace:MemoryGame.ViewModels"
+    x:DataType="vm:GameScoresPageVM"
+    Style="{x:StaticResource NavPageStyle}" >
+    <ContentPage.Content>
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+            <Label Text="Level 2 Page" FontSize="Title" FontAttributes="Bold"/>
+            <Label Text="{Binding Name}" FontSize="Title" FontAttributes="Bold"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+
