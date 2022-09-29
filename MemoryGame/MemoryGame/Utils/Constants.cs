@@ -9,5 +9,7 @@ namespace MemoryGame.Utils
         public const string PokeBaseUrl = "https://pokeapi.co/api/v2/pokemon";
         public const string GamePage = "GamePage";
 
+        public const string DatabaseFilename = "MemoryDB.db3";
+
     }
 }

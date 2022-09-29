@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Icon="clr-namespace:MemoryGame.Helpers"
+
+    x:Class="MemoryGame.Views.UI.GamePage.GameBoard">
+    <ContentView.Content>
+         <Frame CornerRadius="25" Margin="10" Padding="0" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" HasShadow="False" IsClippedToBounds="True">
+                <Grid ColumnDefinitions="50,1,*">
+                    <Image>
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                        </Image.GestureRecognizers>
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Static Icon:BoxIcon.BxChevronLeft}" FontFamily="BI" Size="Small" Color="{x:StaticResource White}"/>
+                        </Image.Source>
+
+                    </Image>
+                    <BoxView Grid.Column="1" BackgroundColor="{x:StaticResource White}"/>
+
+                    <Grid Grid.Column="2" ColumnDefinitions="*,*,*"  ColumnSpacing="3" Padding="0,5">
+                        <StackLayout Grid.Column="0" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" Spacing="0">
+                            <Label Text="Moves" Style="{x:StaticResource GameHeaderLabel}"/>
+                            <Label Text="{Binding CounterMoves}" Style="{x:StaticResource GameHeaderLabel}"/>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="1" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" Spacing="0">
+                            <Label Text="Time" Style="{x:StaticResource GameHeaderLabel}"/>
+                            <Label Text="{Binding GameTimer}" Style="{x:StaticResource GameHeaderLabel}"/>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="2" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}" Spacing="0">
+                            <Label Text="Couples" Style="{x:StaticResource GameHeaderLabel}"/>
+                            <Label FontAttributes="Bold" Style="{x:StaticResource GameHeaderLabel}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding CounterCouples}"/>
+                                        <Span Text="/"/>
+                                        <Span Text="{Binding Couples}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+
+                    </Grid>
+                </Grid>
+
+            </Frame>
+
+    </ContentView.Content>
+</ContentView>
+

@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using FFImageLoading.Svg.Forms;
+using Foundation;
 using UIKit;
 
 namespace MemoryGame.iOS
@@ -19,6 +20,7 @@ namespace MemoryGame.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            var ignore = typeof(SvgCachedImage);
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

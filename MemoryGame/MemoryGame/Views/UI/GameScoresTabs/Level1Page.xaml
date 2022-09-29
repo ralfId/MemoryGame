@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MemoryGame.Views.UI.GameScoresTabs.Level1Page"
+    xmlns:vm="clr-namespace:MemoryGame.ViewModels"
+    xmlns:models="clr-namespace:MemoryGame.Models"
+    xmlns:ui="clr-namespace:MemoryGame.Views.UI.GameScoresTabs"
+    x:DataType="vm:GameScoresPageVM"
+    Style="{x:StaticResource NavPageStyle}" Padding="20,10">
+    <ContentPage.Content>
+        <Grid RowDefinitions="*">
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Ob_Level_1}" >
+                <CollectionView.EmptyView>
+                    <ui:ItemEmptyView/>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:GameScores">
+                        <ui:ItemScore/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <ui:BackHomeBtn />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+

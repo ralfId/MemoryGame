@@ -15,20 +15,47 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="4.1.0" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Xamarin.FFImageLoading.Forms" />
     <None Remove="Views\CustomControls\" />
-    <None Remove="Utils\Fonts\" />
+    <None Remove="Resources\" />
+    <None Remove="Resources\Fonts\" />
+    <!--<None Remove="Resources\Fonts\boxicons.ttf" />-->
+    <None Remove="Com.Airbnb.Xamarin.Forms.Lottie" />
+    <None Remove="Views\UI\" />
+    <None Remove="Views\UI\GamePage\" />
+    <None Remove="Views\Popups\" />
+    <None Remove="ViewModels\PopupsVM\" />
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="Rg.Plugins.Popup" />
+    <None Remove="sqlite-net-pcl" />
+    <None Remove="DBService\" />
+    <None Remove="Views\UI\GameScoresTabs\" />
+    <None Remove="Xamarin.FFImageLoading.Svg.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CustomControls\" />
-    <Folder Include="Utils\Fonts\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Fonts\" />
+    <Folder Include="Views\UI\" />
+    <Folder Include="Views\UI\GamePage\" />
+    <Folder Include="Views\Popups\" />
+    <Folder Include="ViewModels\PopupsVM\" />
+    <Folder Include="DBService\" />
+    <Folder Include="Views\UI\GameScoresTabs\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Images\pokemon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\boxicons.ttf" />
   </ItemGroup>
 </Project>
