@@ -4,9 +4,9 @@ using Xamarin.Forms;
 
 namespace MemoryGame.Views.UI.GameScoresTabs
 {
-    public partial class Level1Page : ContentPage
+    public partial class ItemScore : ContentView
     {
-        public Level1Page()
+        public ItemScore()
         {
             InitializeComponent();
         }

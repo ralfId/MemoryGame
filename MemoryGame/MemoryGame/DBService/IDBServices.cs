@@ -9,5 +9,6 @@ namespace MemoryGame.DBService
         Task AddScore(GameScores scores);
         Task DeleteScore(int id);
         Task<IEnumerable<GameScores>> GetGameScores();
+        Task<IEnumerable<GameScores>> GetGameScoresByLevel(string Level);
     }
 }

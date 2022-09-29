@@ -9,7 +9,7 @@
     <ContentPage.Content>
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
             <Label Text="Level 3 Page" FontSize="Title" FontAttributes="Bold"/>
-            <Label Text="{Binding Name}" FontSize="Title" FontAttributes="Bold"/>
+            <Label Text="{Binding }" FontSize="Title" FontAttributes="Bold"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

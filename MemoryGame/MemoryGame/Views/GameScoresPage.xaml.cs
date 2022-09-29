@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MemoryGame.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +15,7 @@ namespace MemoryGame.Views
         public GameScoresPage()
         {
             InitializeComponent();
+            BindingContext = new GameScoresPageVM(Navigation);
         }
     }
 }

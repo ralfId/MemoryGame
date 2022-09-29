@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MemoryGame.ViewModels;
 using Xamarin.Forms;
 
 namespace MemoryGame.Views.UI.GameScoresTabs
@@ -10,7 +9,6 @@ namespace MemoryGame.Views.UI.GameScoresTabs
         public Level2Page()
         {
             InitializeComponent();
-            BindingContext = new GameScoresPageVM(Navigation);
 
         }
     }

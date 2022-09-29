@@ -4,13 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="MemoryGame.Views.UI.GameScoresTabs.Level1Page"
     xmlns:vm="clr-namespace:MemoryGame.ViewModels"
+    xmlns:models="clr-namespace:MemoryGame.Models"
+    xmlns:ui="clr-namespace:MemoryGame.Views.UI.GameScoresTabs"
     x:DataType="vm:GameScoresPageVM"
-    Style="{x:StaticResource NavPageStyle}">
+    Style="{x:StaticResource NavPageStyle}" Padding="20,10">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-            <Label Text="Level 1 Page" FontSize="Title" FontAttributes="Bold"/>
-            <Label Text="{Binding Name}" FontSize="Title" FontAttributes="Bold"/>
-        </StackLayout>
+        
+        <CollectionView ItemsSource="{Binding Ob_Level_1}" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:GameScores">
+                    <ui:ItemScore/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </ContentPage.Content>
 </ContentPage>
 

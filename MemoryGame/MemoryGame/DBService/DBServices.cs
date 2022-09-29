@@ -36,28 +36,53 @@ namespace MemoryGame.DBService
         {
             await Init();
 
-            var scoresList = await GetGameScores();
+            var scoresList = await GetGameScoresByLevel(scores.Level);
 
-            if (scoresList.Count() >= 10)
+            if (scoresList != null && scoresList.Count() >= 10)
             {
-                await DeleteScore(scoresList.Last().Id);
+                await DeleteScore(scoresList.First().Id);
             }
 
-            await _db.InsertAsync(scores);
+           var id = await _db.InsertAsync(scores);
         }
 
         public async Task DeleteScore(int id)
         {
             await Init();
 
-            await _db.DeleteAsync(id);
+           var deleted = await _db.DeleteAsync<GameScores>(id);
         }
 
         public async Task<IEnumerable<GameScores>> GetGameScores()
         {
-            await Init();
-            var itemsList = await _db.Table<GameScores>().ToListAsync();
-            return itemsList;
+            try
+            {
+                await Init();
+                var itemsList = await _db.Table<GameScores>().ToListAsync();
+                return itemsList;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return default;
+            }
+        }
+
+        public async Task<IEnumerable<GameScores>> GetGameScoresByLevel(string Level)
+        {
+            try
+            {
+                await Init();
+
+                var itemsList = await _db.Table<GameScores>().ToListAsync();
+                var filterList = itemsList.Where(x => x.Level == Level);
+                return filterList;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return default;
+            }
         }
 
     }

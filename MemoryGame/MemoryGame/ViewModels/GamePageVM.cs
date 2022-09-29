@@ -44,6 +44,7 @@ namespace MemoryGame.ViewModels
             Init();
         }
 
+        //TODO: for each move at the end of the game subtract the total seconds of waiting
 
         public ICommand SetSelectedPokemonCommand { get; set; }
         public ICommand GoBackCommand { get; set; }
@@ -125,7 +126,6 @@ namespace MemoryGame.ViewModels
             set { _playCountDown = value; OnPropertyChanged(); }
         }
         #endregion
-
 
         public async void Init()
         {
@@ -253,7 +253,7 @@ namespace MemoryGame.ViewModels
 
         }
 
-        private async void SetSelectedPokemon(Pokemon obj)
+        private void SetSelectedPokemon(Pokemon obj)
         {
             if (IsBlocked) return;
 
@@ -272,7 +272,7 @@ namespace MemoryGame.ViewModels
             {
                 IsBlocked = true;
                 CheckPairs();
-                await Task.Delay(500);
+                
                 IsBlocked = false;
             }
 
@@ -281,7 +281,6 @@ namespace MemoryGame.ViewModels
 
         private async void CheckPairs()
         {
-
             if (selectedPokemonLst[0].Name == selectedPokemonLst[1].Name)
             {
 
@@ -304,6 +303,7 @@ namespace MemoryGame.ViewModels
                 if (CounterCouples == Couples)
                 {
                     StartTheGame(false);
+                    await Task.Delay(1000);
                     SaveScores();
                 }
 
@@ -352,19 +352,20 @@ namespace MemoryGame.ViewModels
                 selectedPokemonLst.Clear();
                 CounterMoves++;
             }
-
-
         }
 
         private async void SaveScores()
         {
             var myScores = new Models.GameScores()
             {
+                Level = Level.ToString(),
+                GameDate = DateTime.Now,
                 GameTime = TimeSpan.Parse(GameTimer),
                 Moves = CounterMoves.ToString()
             };
 
             await _navigation.PushPopupAsync(new GameScoresPopup(myScores));
+            GoBackCommandExecute();
         }
 
         private async void GoBackCommandExecute()
@@ -373,7 +374,5 @@ namespace MemoryGame.ViewModels
             stopWatch.Reset();
             await _navigation.PopToRootAsync();
         }
-
-
     }
 }
