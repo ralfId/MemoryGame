@@ -202,10 +202,15 @@ namespace MemoryGame.ViewModels
             try
             {
 
-                
+
                 if (StartStopGame)
                 {
-                    await Task.Delay(4000);
+                    if (Level == 1)
+                        await Task.Delay(5000);
+                    if (Level == 2)
+                        await Task.Delay(9000);
+                    if (Level == 3)
+                        await Task.Delay(12000);
 
                     CardLstPokemon.ForEach(x => { x.FlipItem = true; x.IsEnabledItem = true; });
                     ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
