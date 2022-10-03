@@ -12,18 +12,10 @@ namespace MemoryGame.ViewModels
         private readonly INavigation _navigation;
         private readonly IDBServices _dBService;
 
-        
-        public ObservableCollection<GameScores> Ob_Level_2 {get; set;}
-        public ObservableCollection<GameScores> Ob_Level_3 {get; set; }
-
         public GameScoresPageVM(INavigation navigation ) : base(navigation)
         {
             _navigation = navigation;
             _dBService = DependencyService.Get<IDBServices>();
-
-            Ob_Level_1 = new ObservableCollection<GameScores>();
-            Ob_Level_2 = new ObservableCollection<GameScores>();
-            Ob_Level_3 = new ObservableCollection<GameScores>();
 
             Init();
         }
@@ -36,6 +28,19 @@ namespace MemoryGame.ViewModels
             set { _ob_Level_1 = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<GameScores> _ob_Level_2;
+        public ObservableCollection<GameScores> Ob_Level_2
+        {
+            get => _ob_Level_2;
+            set { _ob_Level_2 = value; OnPropertyChanged(); }
+        }
+
+        private ObservableCollection<GameScores> _ob_Level_3;
+        public ObservableCollection<GameScores> Ob_Level_3
+        {
+            get => _ob_Level_3;
+            set { _ob_Level_3 = value; OnPropertyChanged(); }
+        }
 
         private async void Init()
         {
@@ -44,13 +49,13 @@ namespace MemoryGame.ViewModels
             var listL3 = await _dBService.GetGameScoresByLevel("3");
 
             if (listL1 != null)
-                Ob_Level_1 = new ObservableCollection<GameScores>(listL1);
+                Ob_Level_1 = new ObservableCollection<GameScores>(listL1.OrderByDescending(x => x.Id));
 
             if (listL2 != null)
-                Ob_Level_2 = new ObservableCollection<GameScores>(listL2);
+                Ob_Level_2 = new ObservableCollection<GameScores>(listL2.OrderByDescending(x => x.Id));
 
             if (listL3 != null)
-                Ob_Level_3 = new ObservableCollection<GameScores>(listL3);
+                Ob_Level_3 = new ObservableCollection<GameScores>(listL3.OrderByDescending(x => x.Id));
         }
     }
 }

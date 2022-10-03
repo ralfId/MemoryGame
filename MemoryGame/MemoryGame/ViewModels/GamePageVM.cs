@@ -153,7 +153,7 @@ namespace MemoryGame.ViewModels
                     Name = x.Name,
                     Url = x.Url,
                     Image = Utils.Helpers.urlImage(x.Url),
-                    IsEnabledItem = false,
+                    IsEnabledItem = x.IsEnabledItem,
                     FlipItem = x.FlipItem
 
                 }).ToList();
@@ -164,7 +164,7 @@ namespace MemoryGame.ViewModels
                     Name = x.Name,
                     Url = x.Url,
                     Image = Utils.Helpers.urlImage(x.Url),
-                    IsEnabledItem = false,
+                    IsEnabledItem = x.IsEnabledItem,
                     FlipItem = x.FlipItem
 
                 }).ToList();
@@ -212,14 +212,24 @@ namespace MemoryGame.ViewModels
                     if (Level == 3)
                         await Task.Delay(12000);
 
-                    CardLstPokemon.ForEach(x => { x.FlipItem = true; x.IsEnabledItem = true; });
-                    ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
+                    CardLstPokemon.ForEach(x => { x.FlipItem = true; });
+                    ObPokemon.Clear();
+
+
+                    if (Level == 1 || Level == 2)
+                        CardLstPokemon.ForEach(x => ObPokemon.Add(x));
+                    else
+                        ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
+
+                    CardLstPokemon.ForEach(x => Console.WriteLine($" --> {x.PokeId} :: {x.Name}"));
+                    //Console.WriteLine($"total of cards --> {ObPokemon.Count()}");
 
                     stopWatch.Start();
                     IsBlocked = false;
                 }
                if(!StartStopGame)
                     IsBlocked = true;
+
                 Device.StartTimer(new TimeSpan(0, 0, 1), () =>
                 {
                     // do something every 60 seconds
@@ -321,7 +331,7 @@ namespace MemoryGame.ViewModels
                     Name = selectedPokemonLst[0].Name,
                     Url = selectedPokemonLst[0].Url,
                     Image = selectedPokemonLst[0].Image,
-                    IsEnabledItem = true,
+                    IsEnabledItem = selectedPokemonLst[0].IsEnabledItem,
                     FlipItem = true
                 };
 
@@ -331,7 +341,7 @@ namespace MemoryGame.ViewModels
                     Name = selectedPokemonLst[1].Name,
                     Url = selectedPokemonLst[1].Url,
                     Image = selectedPokemonLst[1].Image,
-                    IsEnabledItem = true,
+                    IsEnabledItem = selectedPokemonLst[1].IsEnabledItem,
                     FlipItem = true
                 };
 

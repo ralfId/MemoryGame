@@ -19,6 +19,7 @@ namespace MemoryGame.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Rg.Plugins.Popup.Popup.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             var ignore = typeof(SvgCachedImage);
             global::Xamarin.Forms.Forms.Init();

@@ -167,5 +167,8 @@
     <BundleResource Include="Resources\walking-ball.json" />
     <BundleResource Include="Resources\homereturn.png" />
     <BundleResource Include="Resources\mascotsnow.svg" />
+    <BundleResource Include="Resources\L3.png" />
+    <BundleResource Include="Resources\L1.png" />
+    <BundleResource Include="Resources\L2.png" />
   </ItemGroup>
 </Project>

@@ -2,12 +2,17 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:localPages="clr-namespace:MemoryGame.Views.UI.GameScoresTabs"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="True"
+             android:TabbedPage.ToolbarPlacement="Bottom"
              x:Class="MemoryGame.Views.GameScoresPage"
              BarBackgroundColor="{x:AppThemeBinding Dark={x:StaticResource BlackDT}, Light={x:StaticResource BlackLT}}"
              Style="{x:StaticResource NavPageStyle}"
-             BarTextColor="{x:StaticResource White}">
+             SelectedTabColor="{x:StaticResource White}"
+             UnselectedTabColor="Gray">
     <!--Pages can be added as references or inline-->
-    <localPages:Level1Page Title="Level 1" />
-    <localPages:Level2Page Title="Level 2" />
-    <localPages:Level3Page Title="Level 3" />
+    <localPages:Level1Page Title="LEVEL" IconImageSource="L1.png"/>
+    <localPages:Level2Page Title="LEVEL" IconImageSource="L2.png"/>
+    <localPages:Level3Page Title="LEVEL" IconImageSource="L3.png"/>
 </TabbedPage>

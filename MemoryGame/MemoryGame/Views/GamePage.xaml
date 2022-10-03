@@ -7,12 +7,10 @@
              xmlns:vm="clr-namespace:MemoryGame.ViewModels"
              x:DataType="vm:GamePageVM"
              xmlns:control="clr-namespace:MemoryGame.Views.CustomControls"
-             
              xmlns:ui="clr-namespace:MemoryGame.Views.UI.GamePage"
              x:Class="MemoryGame.Views.GamePage"
              ios:Page.UseSafeArea="True"
              x:Name="gamePage"
-             
              Style="{StaticResource NavPageStyle}" >
 
 
@@ -23,10 +21,9 @@
 
                 <ui:GameBoard Grid.Row="0"  />
 
-
                 <ui:LoadingView Grid.Row="1" />
 
-                <CollectionView Grid.Row="1" ItemsSource="{Binding ObPokemon}" VerticalOptions="End" Margin="15,0,15,10" >
+                <CollectionView Grid.Row="1" ItemsSource="{Binding ObPokemon}" Margin="15,0,15,10" SelectionMode="Multiple"  >
                     <CollectionView.Triggers>
                         <DataTrigger TargetType="CollectionView" Binding="{Binding IsRunning}" Value="True">
                             <Setter Property="IsVisible" Value="False"/>
@@ -36,25 +33,25 @@
                         </DataTrigger>
                     </CollectionView.Triggers>
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="{Binding SpanGrid}" HorizontalItemSpacing="3" VerticalItemSpacing="7"/>
+                        <GridItemsLayout Orientation="Vertical" Span="{Binding SpanGrid}" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Pokemon">
 
-                            <control:FlippedControl Command="{Binding BindingContext.SetSelectedPokemonCommand, Source={x:Reference gamePage}}" IsEnabledControl="{Binding IsEnabledItem}" FlipControl="{Binding FlipItem}" Padding="3">
+                            <control:FlippedControl Command="{Binding BindingContext.SetSelectedPokemonCommand, Source={x:Reference gamePage}}" FlipControl="{Binding FlipItem}" IsEnabledControl="{Binding IsEnabledItem}"  Padding="3">
                                 <control:FlippedControl.FrontContent>
 
-                                    <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False" >
+                                    <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False">
                                         <ffImage:CachedImage Source="pokemon.png" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                             <ffImage:CachedImage.Triggers>
                                                 <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="1">
                                                     <Setter Property="HeightRequest" Value="100"/>
                                                 </DataTrigger>
                                                 <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="2">
-                                                    <Setter Property="HeightRequest" Value="85"/>
+                                                    <Setter Property="HeightRequest" Value="80"/>
                                                 </DataTrigger>
                                                 <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="3">
-                                                    <Setter Property="HeightRequest" Value="90"/>
+                                                    <Setter Property="HeightRequest" Value="100"/>
                                                 </DataTrigger>
                                             </ffImage:CachedImage.Triggers>
 
@@ -63,21 +60,22 @@
                                 </control:FlippedControl.FrontContent>
 
                                 <control:FlippedControl.BackContent>
-                                    <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False">
-                                        <ffImage:CachedImage Source="{Binding Image}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}">
-                                            <ffImage:CachedImage.Triggers>
-                                                <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="1">
-                                                    <Setter Property="HeightRequest" Value="100"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="2">
-                                                    <Setter Property="HeightRequest" Value="85"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="3">
-                                                    <Setter Property="HeightRequest" Value="90"/>
-                                                </DataTrigger>
-                                            </ffImage:CachedImage.Triggers>
+                                    <Frame BorderColor="Black" Padding="2" IsClippedToBounds="True" CornerRadius="9" HasShadow="False" BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}">
+                                        <ffImage:CachedImage Source="{Binding Image}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  BackgroundColor="{x:AppThemeBinding Dark={StaticResource BlackDT}, Light={StaticResource BlackLT}}">
+                                            
 
                                         </ffImage:CachedImage>
+                                        <Frame.Triggers>
+                                                <DataTrigger TargetType="Frame" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="1">
+                                                    <Setter Property="HeightRequest" Value="100"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Frame" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="2">
+                                                    <Setter Property="HeightRequest" Value="80"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Frame" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="3">
+                                                    <Setter Property="HeightRequest" Value="100"/>
+                                                </DataTrigger>
+                                            </Frame.Triggers>
                                     </Frame>
                                 </control:FlippedControl.BackContent>
                             </control:FlippedControl>
@@ -87,7 +85,7 @@
                 </CollectionView>
 
             </Grid>
-            <Grid>
+            <Grid Margin="0,75,0,0">
                 <Grid.Triggers>
                     <DataTrigger TargetType="Grid" Binding="{Binding IsBlocked}" Value="True">
                         <Setter Property="IsVisible" Value="True"/>
