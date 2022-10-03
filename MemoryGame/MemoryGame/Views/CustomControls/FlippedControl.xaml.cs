@@ -74,7 +74,7 @@ namespace MemoryGame.Views.CustomControls
         /// TRUE => will flip to front content
         /// FALSE => will flip to back content
         /// </summary>
-        public static readonly BindableProperty FlipControlProperty = BindableProperty.Create(nameof(FlipControl), typeof(bool), typeof(FlippedControl), defaultValue: false, propertyChanged: FlipControlPropertyChanged);
+        public static readonly BindableProperty FlipControlProperty = BindableProperty.Create(nameof(FlipControl), typeof(bool), typeof(FlippedControl), defaultValue: false, defaultBindingMode: BindingMode.TwoWay, propertyChanged: FlipControlPropertyChanged);
         public bool FlipControl
         {
             get => (bool)GetValue(FlipControlProperty);
@@ -106,13 +106,15 @@ namespace MemoryGame.Views.CustomControls
 
         private void FlipToBackExecute(Object sender, EventArgs e)
         {
-            FlipToBack();
+            //FlipToBack();
+            FlipControl = false;
             Command?.Execute(BindingContext);
         }
 
         private void FlipToFrontExecute(Object sender, EventArgs e)
         {
-            FlipToFront();
+            //FlipToFront();
+            FlipControl = true;
             Command?.Execute(BindingContext);
         }
 
@@ -152,16 +154,15 @@ namespace MemoryGame.Views.CustomControls
 
             if ((bool)newValue)
             {
-                mainLayout.IsEnabled = true; //disabled Container Layout
-                mainLayout.FrontLayout.IsEnabled = true; //disabled Front Container Layout
-                mainLayout.BackLayout.IsEnabled = true; //disabled Back Container Layout
+                mainLayout.IsEnabled = true;
+                mainLayout.FrontLayout.IsEnabled = true;
+                mainLayout.BackLayout.IsEnabled = true;
             }
         }
 
         private static void FlipControlPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var mainContent = (FlippedControl)bindable;
-
             if (mainContent.IsEnabled)
             {
                 if ((bool)newValue)

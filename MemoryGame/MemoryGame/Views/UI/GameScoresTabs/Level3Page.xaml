@@ -12,7 +12,7 @@
     Style="{x:StaticResource NavPageStyle}">
     <ContentPage.Content>
         <Grid  Padding="20,10">
-            <CollectionView ItemsSource="{Binding Ob_Level_2}" >
+            <CollectionView ItemsSource="{Binding Ob_Level_3}" >
                 <CollectionView.EmptyView>
                     <ui:ItemEmptyView/>
                 </CollectionView.EmptyView>

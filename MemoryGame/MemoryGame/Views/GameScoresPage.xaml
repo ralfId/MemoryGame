@@ -9,9 +9,10 @@
              x:Class="MemoryGame.Views.GameScoresPage"
              BarBackgroundColor="{x:AppThemeBinding Dark={x:StaticResource BlackDT}, Light={x:StaticResource BlackLT}}"
              Style="{x:StaticResource NavPageStyle}"
-             BarTextColor="{x:StaticResource White}">
+             SelectedTabColor="{x:StaticResource White}"
+             UnselectedTabColor="Gray">
     <!--Pages can be added as references or inline-->
-    <localPages:Level1Page Title="Level 1" />
-    <localPages:Level2Page Title="Level 2" />
-    <localPages:Level3Page Title="Level 3" />
+    <localPages:Level1Page Title="LEVEL 1"/>
+    <localPages:Level2Page Title="LEVEL 2" />
+    <localPages:Level3Page Title="LEVEL 3" />
 </TabbedPage>

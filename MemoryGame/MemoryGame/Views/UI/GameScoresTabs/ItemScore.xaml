@@ -6,18 +6,18 @@
     xmlns:models="clr-namespace:MemoryGame.Models"
     x:DataType="models:GameScores">
     <ContentView.Content>
-        <Frame Margin="10"  Padding="0" BackgroundColor="{x:AppThemeBinding Dark={x:StaticResource BlackDT}, Light={x:StaticResource BlackLT}}">
+        <Frame Margin="10"  Padding="0,10" BackgroundColor="{x:AppThemeBinding Dark={x:StaticResource BlackDT}, Light={x:StaticResource BlackLT}}" HasShadow="False" CornerRadius="0">
             <Grid ColumnDefinitions="5,*">
                 <BoxView HeightRequest="1"  BackgroundColor="{x:AppThemeBinding Dark={x:StaticResource White}, Light={x:StaticResource Black}}" VerticalOptions="FillAndExpand"/>
 
-                <Grid Grid.Column="1" RowDefinitions="auto,auto" ColumnDefinitions="*,*,*" Margin="10,5,5,5">
-                    <Label Grid.Column="0" Grid.Row="0" Text="Fecha"  FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
-                    <Label Grid.Column="1" Grid.Row="0" Text="Tiempo" FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
-                    <Label Grid.Column="2" Grid.Row="0" Text="Movimientos"  FontAttributes="Bold" LineBreakMode="CharacterWrap" TextColor="{x:StaticResource White}"/>
+                <Grid Grid.Column="1" RowDefinitions="auto,auto" ColumnDefinitions="*,0.5*,0.5*" Margin="10,5,5,5">
+                    <Label Grid.Column="0" Grid.Row="0" Text="Date"  FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
+                    <Label Grid.Column="1" Grid.Row="0" Text="Time" FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
+                    <Label Grid.Column="2" Grid.Row="0" Text="Moves"  FontAttributes="Bold" LineBreakMode="CharacterWrap" TextColor="{x:StaticResource White}"/>
 
-                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding GameDate}"  FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
+                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding GameDate, StringFormat='{0:MMM dd H:mm tt}'}"  FontAttributes="Bold" TextColor="{x:StaticResource White}" HorizontalOptions="Start"/>
                     <Label Grid.Column="1" Grid.Row="1" Text="{Binding GameTime}" FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
-                    <Label Grid.Column="2" Grid.Row="1" Text="{Binding Moves}"  FontAttributes="Bold" LineBreakMode="CharacterWrap" TextColor="{x:StaticResource White}"/>
+                    <Label Grid.Column="2" Grid.Row="1" Text="{Binding Moves}"  FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
                 </Grid>
             </Grid>
 

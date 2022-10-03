@@ -12,18 +12,10 @@ namespace MemoryGame.ViewModels
         private readonly INavigation _navigation;
         private readonly IDBServices _dBService;
 
-        
-        public ObservableCollection<GameScores> Ob_Level_2 {get; set;}
-        public ObservableCollection<GameScores> Ob_Level_3 {get; set; }
-
         public GameScoresPageVM(INavigation navigation ) : base(navigation)
         {
             _navigation = navigation;
             _dBService = DependencyService.Get<IDBServices>();
-
-            Ob_Level_1 = new ObservableCollection<GameScores>();
-            Ob_Level_2 = new ObservableCollection<GameScores>();
-            Ob_Level_3 = new ObservableCollection<GameScores>();
 
             Init();
         }
@@ -36,6 +28,19 @@ namespace MemoryGame.ViewModels
             set { _ob_Level_1 = value; OnPropertyChanged(); }
         }
 
+        private ObservableCollection<GameScores> _ob_Level_2;
+        public ObservableCollection<GameScores> Ob_Level_2
+        {
+            get => _ob_Level_2;
+            set { _ob_Level_2 = value; OnPropertyChanged(); }
+        }
+
+        private ObservableCollection<GameScores> _ob_Level_3;
+        public ObservableCollection<GameScores> Ob_Level_3
+        {
+            get => _ob_Level_3;
+            set { _ob_Level_3 = value; OnPropertyChanged(); }
+        }
 
         private async void Init()
         {
