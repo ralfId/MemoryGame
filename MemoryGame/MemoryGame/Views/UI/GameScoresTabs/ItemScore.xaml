@@ -15,7 +15,7 @@
                     <Label Grid.Column="1" Grid.Row="0" Text="Time" FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
                     <Label Grid.Column="2" Grid.Row="0" Text="Moves"  FontAttributes="Bold" LineBreakMode="CharacterWrap" TextColor="{x:StaticResource White}"/>
 
-                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding GameDate, StringFormat='{0:MMM dd H:mm tt}'}"  FontAttributes="Bold" TextColor="{x:StaticResource White}" HorizontalOptions="Start"/>
+                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding GameDate, StringFormat='{0:MMM dd, H:mm tt}'}"  FontAttributes="Bold" TextColor="{x:StaticResource White}" HorizontalOptions="Start"/>
                     <Label Grid.Column="1" Grid.Row="1" Text="{Binding GameTime}" FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
                     <Label Grid.Column="2" Grid.Row="1" Text="{Binding Moves}"  FontAttributes="Bold" TextColor="{x:StaticResource White}"/>
                 </Grid>
