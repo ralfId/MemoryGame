@@ -7,12 +7,10 @@
              xmlns:vm="clr-namespace:MemoryGame.ViewModels"
              x:DataType="vm:GamePageVM"
              xmlns:control="clr-namespace:MemoryGame.Views.CustomControls"
-             
              xmlns:ui="clr-namespace:MemoryGame.Views.UI.GamePage"
              x:Class="MemoryGame.Views.GamePage"
              ios:Page.UseSafeArea="True"
              x:Name="gamePage"
-             
              Style="{StaticResource NavPageStyle}" >
 
 
@@ -35,7 +33,7 @@
                         </DataTrigger>
                     </CollectionView.Triggers>
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="{Binding SpanGrid}" HorizontalItemSpacing="3" VerticalItemSpacing="7"/>
+                        <GridItemsLayout Orientation="Vertical" Span="{Binding SpanGrid}" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Pokemon">
@@ -43,7 +41,7 @@
                             <control:FlippedControl Command="{Binding BindingContext.SetSelectedPokemonCommand, Source={x:Reference gamePage}}" FlipControl="{Binding FlipItem}" IsEnabledControl="{Binding IsEnabledItem}"  Padding="3">
                                 <control:FlippedControl.FrontContent>
 
-                                    <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False" >
+                                    <Frame BorderColor="Black" Padding="0" IsClippedToBounds="True" CornerRadius="9" HasShadow="False">
                                         <ffImage:CachedImage Source="pokemon.png" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                             <ffImage:CachedImage.Triggers>
                                                 <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="1">
@@ -53,7 +51,7 @@
                                                     <Setter Property="HeightRequest" Value="80"/>
                                                 </DataTrigger>
                                                 <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="3">
-                                                    <Setter Property="HeightRequest" Value="90"/>
+                                                    <Setter Property="HeightRequest" Value="100"/>
                                                 </DataTrigger>
                                             </ffImage:CachedImage.Triggers>
 
@@ -72,7 +70,7 @@
                                                     <Setter Property="HeightRequest" Value="80"/>
                                                 </DataTrigger>
                                                 <DataTrigger TargetType="ffImage:CachedImage" Binding="{Binding BindingContext.Level, Source={x:Reference gamePage}}" Value="3">
-                                                    <Setter Property="HeightRequest" Value="90"/>
+                                                    <Setter Property="HeightRequest" Value="100"/>
                                                 </DataTrigger>
                                             </ffImage:CachedImage.Triggers>
 
