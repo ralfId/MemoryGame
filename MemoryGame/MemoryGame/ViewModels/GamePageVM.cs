@@ -221,7 +221,7 @@ namespace MemoryGame.ViewModels
                     else
                         ObPokemon = new ObservableCollection<Pokemon>(CardLstPokemon);
 
-                    CardLstPokemon.ForEach(x => Console.WriteLine($" --> {x.PokeId} :: {x.Name}"));
+                    //CardLstPokemon.ForEach(x => Console.WriteLine($" --> {x.PokeId} :: {x.Name}"));
                     //Console.WriteLine($"total of cards --> {ObPokemon.Count()}");
 
                     stopWatch.Start();
