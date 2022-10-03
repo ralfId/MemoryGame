@@ -32,3 +32,6 @@ Android, iOS
 <img src="https://res.cloudinary.com/dvupfwoil/image/upload/v1664831729/PortfolioImages/Mobile/MemoryGameXF/Simulator_Screen_Shot_-_iPhone_14_Pro_Max_-_2022-10-03_at_15.01.45_haq5g9.png" alt="iOS screenshot 3" height="500">
 <img src="https://res.cloudinary.com/dvupfwoil/image/upload/v1664831731/PortfolioImages/Mobile/MemoryGameXF/Simulator_Screen_Shot_-_iPhone_14_Pro_Max_-_2022-10-03_at_15.02.00_mcahaa.png" alt="iOS screenshot 3" height="500">
 </div>
+
+## LICENSE
+ [:bookmark: MIT LICENSE](https://github.com/ralfId/MemoryGame/blob/main/LICENSE)
